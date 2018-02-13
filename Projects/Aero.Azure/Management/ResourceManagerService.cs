@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Aero.Azure.Management.Authentication;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
@@ -7,13 +9,17 @@ namespace Aero.Azure.Management
 {
     public interface IResourceManagerService : IManagementService
     {
-        Task<DeploymentExtended> DeployArmTemplate(string resourceGroupName, string deploymentName, DeploymentProperties deploymentProperties);
+        Task<ResourceGroup> CreateOrUpdateResourceGroupAsync(string name, string location, IDictionary<string, string> tags = null);
+
+        Task<bool> DeleteResourceGroupIfExistsAsync(string name);
+
+        Task<DeploymentExtended> DeployArmTemplateAsync(string resourceGroupName, string deploymentName, DeploymentProperties deploymentProperties);
 
         Task<ResourceGroup> GetResourceGroupAsync(string name);
 
         Task<ResourceGroup[]> GetResourceGroupsAsync();
 
-        Task<DeploymentValidateResult> ValidateArmTemplate(string resourceGroupName, string deploymentName, DeploymentProperties deploymentProperties);
+        Task<DeploymentValidateResult> ValidateArmTemplateAsync(string resourceGroupName, string deploymentName, DeploymentProperties deploymentProperties);
     }
 
     public class ResourceManagerService : AbstractManagementService<IResourceManagementClient>, IResourceManagerService
@@ -22,7 +28,27 @@ namespace Aero.Azure.Management
         {
         }
 
-        public async Task<DeploymentExtended> DeployArmTemplate(string resourceGroupName, string deploymentName, DeploymentProperties deploymentProperties)
+        public async Task<ResourceGroup> CreateOrUpdateResourceGroupAsync(string name, string location, IDictionary<string, string> tags = null)
+        {
+            var resourceGroup = await Client.ResourceGroups.CreateOrUpdateAsync(name, new ResourceGroup(location, null, null, null, null, tags));
+            return resourceGroup;
+        }
+
+        public async Task<bool> DeleteResourceGroupIfExistsAsync(string name)
+        {
+            var resourceGroups = await GetResourceGroupsAsync();
+            var resourceGroup = resourceGroups.SingleOrDefault(x => x.Name == name);
+
+            if (resourceGroup == null)
+            {
+                return true;
+            }
+
+            await Client.ResourceGroups.DeleteAsync(name);
+            return true;
+        }
+
+        public async Task<DeploymentExtended> DeployArmTemplateAsync(string resourceGroupName, string deploymentName, DeploymentProperties deploymentProperties)
         {
             var result = await Client.Deployments.CreateOrUpdateAsync(resourceGroupName, deploymentName, new Deployment(deploymentProperties));
             return result;
@@ -48,7 +74,7 @@ namespace Aero.Azure.Management
             Client = new ResourceManagementClient(credentials) {SubscriptionId = credentials.DefaultSubscriptionId};
         }
 
-        public async Task<DeploymentValidateResult> ValidateArmTemplate(string resourceGroupName, string deploymentName, DeploymentProperties deploymentProperties)
+        public async Task<DeploymentValidateResult> ValidateArmTemplateAsync(string resourceGroupName, string deploymentName, DeploymentProperties deploymentProperties)
         {
             var result = await Client.Deployments.ValidateAsync(resourceGroupName, deploymentName, new Deployment(deploymentProperties));
             return result;
