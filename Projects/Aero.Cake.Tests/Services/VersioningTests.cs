@@ -52,7 +52,7 @@ namespace Aero.Cake.Services
         }
 
         [Fact]
-        public void Update__When_Attribute_Missing_Exception_Is_Throw()
+        public void Update_When_Attribute_Missing_Exception_Is_Throw()
         {
             //Arrange
             CakeContext.Globber.Match($"{Context.ProjectsPath}/**/*.csproj").Returns(new List<FilePath> { "/p2/p2.csproj" });
@@ -61,6 +61,20 @@ namespace Aero.Cake.Services
 
             //Act
             Assert.Throws<CakeCore.CakeException>(() => ServiceUnderTest.UpdateFiles("2.2.2.2", "../projects"));
+
+        }
+
+        [Fact]
+        public void Update_Exclude_Files_Test()
+        {
+            //Arrange
+            CakeContext.Globber.Match($"{Context.ProjectsPath}/**/*.csproj").Returns(new List<FilePath> { "/p1/p1.csproj", "/p2/p2.csproj" });
+
+            CakeContext.FileSystem.CreateFile("/p1/p1.csproj", ReadFile($"{TestDirectory}/TestFiles/VersionAttributeExists.csproj"));
+            CakeContext.FileSystem.CreateFile("/p2/p2.csproj", ReadFile($"{TestDirectory}/TestFiles/VersionAttributeDoesNotExist.csproj"));
+
+            //Act
+            ServiceUnderTest.UpdateFiles("2.2.2.2", "../projects", "P2"); //pass P2 with setup above of p2 to test case insensitivity
 
         }
     }

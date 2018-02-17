@@ -1,4 +1,5 @@
-﻿using Cake.Common.Diagnostics;
+﻿using System.Linq;
+using Cake.Common.Diagnostics;
 using Cake.Common.IO;
 using Cake.Common.Xml;
 using Cake.Core;
@@ -8,7 +9,7 @@ namespace Aero.Cake.Services
 { 
     public interface IVersionSevice
     {
-        void UpdateFiles(string version, string projectPath);
+        void UpdateFiles(string version, string projectPath, params string[] excludeProjectsNamed);
     }
 
     public class VersionService : AbstractService, IVersionSevice
@@ -23,16 +24,18 @@ namespace Aero.Cake.Services
         /// </summary>
         /// <remarks>Keeping version as a parameter instead of looking for the version argument as this is 
         /// something that could be pulled out into a NuGet package at some point</remarks>
-        public void UpdateFiles(string version, string projectPath)
+        public void UpdateFiles(string version, string projectPath, params string[] excludeProjectsNamed)
         {
             //We'll keep this around for dealing with Azure Functions as I think that has to be Full Framework
             //var assemblyInfoFiles = context.GetFiles($"{context.ProjectsPath}/**/properties/AssemblyInfo.cs");
 
             var csprojFiles = CakeContext.GetFiles($"{projectPath}/**/*.csproj");
+            var excludeProjectsNamedLower = excludeProjectsNamed.Select(x => x.ToLowerInvariant()).ToArray();
 
             foreach(var f in csprojFiles)
             {
-                UpdateCsProjFile(f, version);
+                if(!excludeProjectsNamedLower.Contains(f.GetFilenameWithoutExtension().FullPath.ToLowerInvariant()))
+                    UpdateCsProjFile(f, version);
             }
 
         }
