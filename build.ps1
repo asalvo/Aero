@@ -31,7 +31,7 @@ Param(
     [string[]]$ScriptArgs
 )
 
-$DotNetVersion = "2.1.2";
+$DotNetVersion = "2.1.0";
 $DotNetInstallerUri = "https://dot.net/v1/dotnet-install.ps1";
 $NugetUrl = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 
@@ -63,7 +63,7 @@ if (Get-Command dotnet -ErrorAction SilentlyContinue) {
     $FoundDotNetCliVersion = dotnet --version;
 }
 
-if($FoundDotNetCliVersion -ne $DotNetVersion) {
+if($FoundDotNetCliVersion -lt $DotNetVersion) {
     $InstallPath = Join-Path $PSScriptRoot ".dotnet"
     if (!(Test-Path $InstallPath)) {
         mkdir -Force $InstallPath | Out-Null;
@@ -103,7 +103,7 @@ $Arguments = @{
 try {
     Push-Location
 	$scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
-    Set-Location $scriptDir/build/Aero.Common.Azure.Build
+    Set-Location $scriptDir/build/Aero.Build
     Write-Host "Restoring packages..."
     Invoke-Expression "dotnet restore"
     if($LASTEXITCODE -eq 0) {
@@ -112,7 +112,7 @@ try {
         if($LASTEXITCODE -eq 0) {
             Write-Output "Running build..."
 			#Write-Output "dotnet bin/Debug/netcoreapp2.0/publish/Aero.Common.Azure.Build.dll $Arguments $ScriptArgs"
-            Invoke-Expression "dotnet bin/Debug/netcoreapp2.0/publish/Aero.Common.Azure.Build.dll $Arguments $ScriptArgs"
+            Invoke-Expression "dotnet bin/Debug/netcoreapp2.0/publish/Aero.Build.dll $Arguments $ScriptArgs"
         }
     }
 }
