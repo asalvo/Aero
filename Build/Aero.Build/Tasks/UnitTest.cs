@@ -17,7 +17,9 @@ namespace Aero.Build.Tasks
                 Logger = "trx"
             };
 
-            dotNetCore.Test($"{context.ProjectsPath}/Aero.Common.Azure.Tests/Aero.Common.Azure.Tests.csproj", testSettings);
+            dotNetCore.Test($"{context.ProjectsPath}/Aero.Tests/Aero.Tests.csproj", testSettings);
+            dotNetCore.Test($"{context.ProjectsPath}/Aero.Azure.Tests/Aero.Azure.Tests.csproj", testSettings);
+            dotNetCore.Test($"{context.ProjectsPath}/Aero.Cake.Tests/Aero.Cake.Tests.csproj", testSettings);
         }
     }
 }
