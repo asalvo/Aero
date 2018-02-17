@@ -11,8 +11,6 @@ namespace Aero.Build.Tasks
     {
         public override void Run(Context context)
         {
-            var projectName = context.Argument("ProjectName", "Aero");
-
             //Set the Version info
             var versionService = context.ServiceProvider.GetService<IVersionSevice>();
             versionService.UpdateFiles(context.Argument<string>("AppVersion"), context.ProjectsPath, "VersionAttributeDoesNotExist");
@@ -26,7 +24,10 @@ namespace Aero.Build.Tasks
             };
 
             var dotNetCore = context.ServiceProvider.GetService<IDotNetCoreCupCake>();
-            dotNetCore.Build($"{context.ProjectsPath}/{projectName}/{projectName}.csproj", buildSettings);
+
+            //This build project is going to build everything in debug mode. Then we will build in release mode. 
+            dotNetCore.Build($"{context.ProjectsPath}/Aero.Azure/Aero.Azure.csproj", buildSettings);
+            dotNetCore.Build($"{context.ProjectsPath}/Aero.Cake/Aero.Cake.csproj", buildSettings);
         }
     }
 }
