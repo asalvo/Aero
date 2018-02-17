@@ -15,7 +15,7 @@ namespace Aero.Build.Tasks
 
             //Set the Version info
             var versionService = context.ServiceProvider.GetService<IVersionSevice>();
-            versionService.UpdateFiles(context.Argument<string>("AppVersion"), context.ProjectsPath);
+            versionService.UpdateFiles(context.Argument<string>("AppVersion"), context.ProjectsPath, "VersionAttributeDoesNotExist");
 
             //Check out the docs on DotNetCore settings. There are some things we want to set, like Configuration, and the replacement for rebuild. 
 
@@ -26,7 +26,7 @@ namespace Aero.Build.Tasks
             };
 
             var dotNetCore = context.ServiceProvider.GetService<IDotNetCoreCupCake>();
-            dotNetCore.Build($"{context.ProjectsPath}/${projectName}/{projectName}.csproj", buildSettings);
+            dotNetCore.Build($"{context.ProjectsPath}/{projectName}/{projectName}.csproj", buildSettings);
         }
     }
 }
