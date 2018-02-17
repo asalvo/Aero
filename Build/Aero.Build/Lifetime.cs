@@ -18,7 +18,7 @@ namespace Aero.Build
             context.Configuration = context.Argument("configuration", "Release");
             context.Target = context.Argument("target", "Default");
             context.ServiceProvider = BuildServiceProvider(context);
-            context.SolutionFile = $"{context.RepoRootPath}/{context.Argument("solutionFile", "Aero.Common.Azure.sln")}";
+            context.SolutionFile = $"{context.RepoRootPath}/{context.Argument("solutionFile", "Aero.sln")}";
             
         }
 

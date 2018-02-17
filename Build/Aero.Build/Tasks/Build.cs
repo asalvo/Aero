@@ -11,6 +11,8 @@ namespace Aero.Build.Tasks
     {
         public override void Run(Context context)
         {
+            var projectName = context.Argument("ProjectName", "Aero");
+
             //Set the Version info
             var versionService = context.ServiceProvider.GetService<IVersionSevice>();
             versionService.UpdateFiles(context.Argument<string>("AppVersion"), context.ProjectsPath);
@@ -24,7 +26,7 @@ namespace Aero.Build.Tasks
             };
 
             var dotNetCore = context.ServiceProvider.GetService<IDotNetCoreCupCake>();
-            dotNetCore.Build($"{context.ProjectsPath}/Aero.Common.Azure/Aero.Common.Azure.csproj", buildSettings);
+            dotNetCore.Build($"{context.ProjectsPath}/${projectName}/{projectName}.csproj", buildSettings);
         }
     }
 }
