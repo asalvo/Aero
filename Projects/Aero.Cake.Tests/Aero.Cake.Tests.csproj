@@ -13,6 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="TestResults\**" />
+    <EmbeddedResource Remove="TestResults\**" />
+    <None Remove="TestResults\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Cake.Frosting" Version="0.1.0-alpha0077" />
     <PackageReference Include="Cake.Testing" Version="0.24.0" />
     <PackageReference Include="FluentAssertions" Version="4.19.4" />
