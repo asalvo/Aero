@@ -12,6 +12,8 @@ namespace Aero.Build
 
         }
 
+        public string AppVersion { get; set; }
+
         public string Configuration { get; set; }
 
         public string ProjectsPath => $"{RepoRootPath}/projects";
@@ -20,7 +22,7 @@ namespace Aero.Build
 
         public string RepoRootPath => "..";
 
-        public string SolutionFile { get; internal set; }
+        public string SolutionFile { get; set; }
 
         public string Target { get; set; }
         

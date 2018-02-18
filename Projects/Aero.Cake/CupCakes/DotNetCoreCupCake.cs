@@ -1,5 +1,6 @@
 ﻿using Cake.Common.Tools.DotNetCore;
 using Cake.Common.Tools.DotNetCore.Build;
+using Cake.Common.Tools.DotNetCore.Pack;
 using Cake.Common.Tools.DotNetCore.Publish;
 using Cake.Common.Tools.DotNetCore.Test;
 using Cake.Core;
@@ -9,6 +10,7 @@ namespace Aero.Cake.CupCakes
     public interface IDotNetCoreCupCake
     {
         void Build(string projectPath, DotNetCoreBuildSettings settings);
+        void Pack(string projectPath, DotNetCorePackSettings settings);
         void Publish(string projectPath, DotNetCorePublishSettings settings);
         void Test(string projectPath, DotNetCoreTestSettings settings);
     }
@@ -25,6 +27,11 @@ namespace Aero.Cake.CupCakes
         public void Build(string projectPath, DotNetCoreBuildSettings settings)
         {
             _context.DotNetCoreBuild(projectPath, settings);
+        }
+
+        public void Pack(string projectPath, DotNetCorePackSettings settings)
+        {
+            _context.DotNetCorePack(projectPath, settings);
         }
 
         public void Publish(string projectPath, DotNetCorePublishSettings settings)
