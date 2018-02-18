@@ -146,7 +146,7 @@ namespace Aero.Common
         public void CreateDirectory_When_Directory_Exists_Then_Do_Nothing()
         {
             //Pre-Assert
-            _testDirectory.GetDirectories().Count().Should().Be(0);
+            _testDirectory.GetDirectories().Length.Should().Be(0);
 
             //Arrange
             var newDirectoryName = Path.Combine(_testDirectory.FullName, "NewDirectory");
