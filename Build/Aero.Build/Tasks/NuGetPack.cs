@@ -1,4 +1,5 @@
-﻿using Aero.Cake.CupCakes;
+﻿using System;
+using Aero.Cake.CupCakes;
 using Cake.Common;
 using Cake.Common.Tools.DotNetCore.Pack;
 using Cake.Core;
@@ -15,6 +16,7 @@ namespace Aero.Build.Tasks
             var appVersion = context.Argument<string>("AppVersion");
             var dotNetCore = context.ServiceProvider.GetService<IDotNetCoreCupCake>();
 
+            //https://github.com/NuGet/Home/wiki/Adding-nuget-pack-as-a-msbuild-target
             var settings = new DotNetCorePackSettings
             {
                 Configuration = context.Configuration,
@@ -22,6 +24,7 @@ namespace Aero.Build.Tasks
                 NoBuild = true,
                 ArgumentCustomization = args => args
                     .Append($"/p:Version={appVersion}")
+                    .Append($"/p:Copyright=\"Copyright {DateTime.UtcNow.Year} Adam Salvo\"")
             };
             
             PackAero(context, dotNetCore, settings);
