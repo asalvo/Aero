@@ -31,7 +31,7 @@ Param(
     [string[]]$ScriptArgs
 )
 
-$DotNetVersion = "2.1.0";
+$DotNetVersion = "2.1.2";
 $DotNetInstallerUri = "https://dot.net/v1/dotnet-install.ps1";
 $NugetUrl = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 

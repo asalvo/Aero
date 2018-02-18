@@ -8,6 +8,8 @@ namespace Aero.Build.Tasks
     {
         public override void Run(Context context)
         {
+            //Restore is not used on VSTS due to Aero.Build referencing the Aero.Cake project
+
             context.DotNetCoreRestore(context.SolutionFile, new DotNetCoreRestoreSettings
             {
                 Sources = new[] {
