@@ -13,6 +13,7 @@
 	  <PackageProjectUrl>https://github.com/asalvo/Aero</PackageProjectUrl>
 	  <PackageLicenseUrl>https://github.com/asalvo/Aero/blob/master/LICENSE</PackageLicenseUrl>
 	  <RepositoryUrl>https://github.com/asalvo/Aero</RepositoryUrl>
+	  <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 
 </Project>
