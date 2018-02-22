@@ -14,8 +14,7 @@ namespace Aero.Build.Tasks
         public override void Run(Context context)
         {
             var appVersion = context.Argument<string>("AppVersion");
-            var appVersionSuffix = context.Argument("AppVersionSuffix", string.Empty);
-
+            
             var dotNetCore = context.ServiceProvider.GetService<IDotNetCoreCupCake>();
 
             //https://github.com/NuGet/Home/wiki/Adding-nuget-pack-as-a-msbuild-target
@@ -24,7 +23,7 @@ namespace Aero.Build.Tasks
                 Configuration = context.Configuration,
                 NoBuild = true,
                 ArgumentCustomization = args => args
-                    .Append($"/p:Version={appVersion}{appVersionSuffix}")
+                    .Append($"/p:Version={appVersion}")
                     .Append($"/p:Copyright=\"Copyright {DateTime.UtcNow.Year} Adam Salvo\"")
             };
             
