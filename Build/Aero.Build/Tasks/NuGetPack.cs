@@ -22,7 +22,6 @@ namespace Aero.Build.Tasks
             var settings = new DotNetCorePackSettings
             {
                 Configuration = context.Configuration,
-                IncludeSymbols = true,
                 NoBuild = true,
                 ArgumentCustomization = args => args
                     .Append($"/p:Version={appVersion}{appVersionSuffix}")
