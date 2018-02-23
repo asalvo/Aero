@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Aero.Azure.Management.Authentication;
+using Aero.Infrastructure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using NSubstitute;
 

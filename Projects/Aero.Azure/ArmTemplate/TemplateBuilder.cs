@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Aero.Infrastructure;
 using Newtonsoft.Json.Linq;
 
 namespace Aero.Azure.ArmTemplate

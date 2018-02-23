@@ -1,4 +1,6 @@
-﻿namespace Aero.Azure.Client
+﻿using Aero.Infrastructure;
+
+namespace Aero.Azure.Client
 {
     public abstract class AbstractClientService
     {

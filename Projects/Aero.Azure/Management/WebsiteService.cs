@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Aero.Azure.Management.Authentication;
 using Aero.Azure.Management.Models;
+using Aero.Infrastructure;
 using Microsoft.Azure.Management.WebSites;
 using Microsoft.Azure.Management.WebSites.Models;
 

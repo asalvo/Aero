@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace Aero
+namespace Aero.Infrastructure
 {
     public interface IAeroLogger
     {

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Aero.Infrastructure;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.KeyVault.Models;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;

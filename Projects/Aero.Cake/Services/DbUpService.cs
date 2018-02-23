@@ -1,5 +1,6 @@
 ﻿using System.Data.SqlClient;
 using System.Reflection;
+using Aero.Infrastructure;
 using Cake.Core;
 using Cake.Core.Diagnostics;
 using DbUp;

@@ -1,4 +1,5 @@
 ﻿using Aero.Azure.Management.Authentication;
+using Aero.Infrastructure;
 
 namespace Aero.Azure.Management
 {

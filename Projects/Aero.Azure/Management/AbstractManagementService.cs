@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Aero.Azure.Management.Authentication;
+using Aero.Infrastructure;
 using Microsoft.Rest.Azure;
 
 namespace Aero.Azure.Management

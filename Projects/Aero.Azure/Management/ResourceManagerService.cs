@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Aero.Azure.Management.Authentication;
+using Aero.Infrastructure;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 

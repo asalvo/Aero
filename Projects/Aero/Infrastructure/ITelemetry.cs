@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Aero.Interfaces
+namespace Aero.Infrastructure
 {
     public interface ITelemetry
     {
