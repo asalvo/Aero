@@ -46,22 +46,13 @@ namespace Aero.Cake.Services
             if (!CakeContext.XmlPeek(filePath, "/Project/@Sdk").StartsWith("Microsoft.NET.Sdk"))
                 return;
 
-            if (version.Contains("-"))
+            const string semver = @"^(\d+\.\d+\.\d+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$";
+            var regex = new Regex(semver);
+            var match = regex.Match(version);
+
+            if (match.Success)
             {
-                const string semver = @"^(\d+\.\d+\.\d+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$";
-                var regex = new Regex(semver);
-                var match = regex.Match(version);
-
                 version = string.IsNullOrWhiteSpace(match.Groups[3].Value) ? match.Groups[1].Value : $"{match.Groups[1]}.{match.Groups[3]}";
-
-                //if (string.IsNullOrEmpty(match.Groups[3].Value))
-                //{
-                //    version = $"{match.Groups[1]}.{match.Groups[3]}";
-                //}
-                //else
-                //{
-                //    version = $"{match.Groups[0]}.{match.Groups[1]}.{match.Groups[2]}";
-                //}
             }
             else
             {

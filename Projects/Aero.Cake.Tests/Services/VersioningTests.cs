@@ -53,6 +53,7 @@ namespace Aero.Cake.Services
 
         [Theory]
         [InlineData("1.2.3", "1.2.3")]
+        [InlineData("1.2.3+5", "1.2.3.5")]
         [InlineData("1.2.3-preview", "1.2.3")]
         [InlineData("1.2.3-preview+4", "1.2.3.4")]
         [InlineData("1.2.3-beta", "1.2.3")]
