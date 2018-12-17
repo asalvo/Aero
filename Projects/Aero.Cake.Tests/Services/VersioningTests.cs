@@ -19,7 +19,7 @@ namespace Aero.Cake.Services
         public void Update_Test()
         {
             //Arrange
-            CakeContext.Globber.Match($"{MyContext.ProjectsPath}/**/*.csproj").Returns(new List<FilePath> {"/p1/p1.csproj"});
+            CakeContext.Globber.Match($"{MyContext.ProjectsPath}/**/*.csproj", Arg.Any<GlobberSettings>()).Returns(new List<FilePath> {"/p1/p1.csproj"});
 
             CakeContext.FileSystem.CreateFile("/p1/p1.csproj", ReadFile($"{TestDirectory}/TestFiles/VersionAttributeExists.csproj"));
 
@@ -37,7 +37,7 @@ namespace Aero.Cake.Services
         public void Update_2_Segment_Test()
         {
             //Arrange
-            CakeContext.Globber.Match($"{MyContext.ProjectsPath}/**/*.csproj").Returns(new List<FilePath> { "/p1/p1.csproj" });
+            CakeContext.Globber.Match($"{MyContext.ProjectsPath}/**/*.csproj", Arg.Any<GlobberSettings>()).Returns(new List<FilePath> { "/p1/p1.csproj" });
 
             CakeContext.FileSystem.CreateFile("/p1/p1.csproj", ReadFile($"{TestDirectory}/TestFiles/VersionAttributeExists.csproj"));
 
@@ -63,7 +63,7 @@ namespace Aero.Cake.Services
         public void Update_SemVer2_Test(string providedVersion, string expectedVersion)
         {
             //Arrange
-            CakeContext.Globber.Match($"{MyContext.ProjectsPath}/**/*.csproj").Returns(new List<FilePath> { "/p1/p1.csproj" });
+            CakeContext.Globber.Match($"{MyContext.ProjectsPath}/**/*.csproj", Arg.Any<GlobberSettings>()).Returns(new List<FilePath> { "/p1/p1.csproj" });
 
             CakeContext.FileSystem.CreateFile("/p1/p1.csproj", ReadFile($"{TestDirectory}/TestFiles/VersionAttributeExists.csproj"));
 
@@ -81,7 +81,7 @@ namespace Aero.Cake.Services
         public void Update_When_Attribute_Missing_Exception_Is_Throw()
         {
             //Arrange
-            CakeContext.Globber.Match($"{MyContext.ProjectsPath}/**/*.csproj").Returns(new List<FilePath> { "/p2/p2.csproj" });
+            CakeContext.Globber.Match($"{MyContext.ProjectsPath}/**/*.csproj", Arg.Any<GlobberSettings>()).Returns(new List<FilePath> { "/p2/p2.csproj" });
 
             CakeContext.FileSystem.CreateFile("/p2/p2.csproj", ReadFile($"{TestDirectory}/TestFiles/VersionAttributeDoesNotExist.csproj"));
 
@@ -94,7 +94,7 @@ namespace Aero.Cake.Services
         public void Update_Exclude_Files_Test()
         {
             //Arrange
-            CakeContext.Globber.Match($"{MyContext.ProjectsPath}/**/*.csproj").Returns(new List<FilePath> { "/p1/p1.csproj", "/p2/p2.csproj" });
+            CakeContext.Globber.Match($"{MyContext.ProjectsPath}/**/*.csproj", Arg.Any<GlobberSettings>()).Returns(new List<FilePath> { "/p1/p1.csproj", "/p2/p2.csproj" });
 
             CakeContext.FileSystem.CreateFile("/p1/p1.csproj", ReadFile($"{TestDirectory}/TestFiles/VersionAttributeExists.csproj"));
             CakeContext.FileSystem.CreateFile("/p2/p2.csproj", ReadFile($"{TestDirectory}/TestFiles/VersionAttributeDoesNotExist.csproj"));
