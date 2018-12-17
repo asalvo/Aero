@@ -14,7 +14,7 @@ namespace Aero.Cake
             CakeContext = new CakeContextFixture();
             ServiceProvider = Substitute.For<IServiceProvider>();
 
-            Context = new MyContextTester(CakeContext)
+            MyContext = new MyContextTester(CakeContext)
             {
                 
             };
@@ -22,7 +22,7 @@ namespace Aero.Cake
 
         public CakeContextFixture CakeContext { get; }
 
-        public MyContextTester Context { get; }
+        public MyContextTester MyContext { get; }
 
         public IServiceProvider ServiceProvider { get; }
 

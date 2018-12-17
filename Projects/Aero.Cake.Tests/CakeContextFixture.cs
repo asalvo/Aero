@@ -36,6 +36,8 @@ namespace Aero.Cake
             Log = new FakeLog();
         }
 
+        public ICakeDataResolver Data => throw new NotImplementedException();
+
         public FakeEnvironment Environment { get; }
         ICakeEnvironment ICakeContext.Environment => Environment;
 
@@ -55,6 +57,7 @@ namespace Aero.Cake
         public IRegistry Registry => throw new NotImplementedException();
 
         public IToolLocator Tools => throw new NotImplementedException();
+        
     }
 
     public class CakeArguments : ICakeArguments
