@@ -13,6 +13,8 @@ namespace Aero.Infrastructure
 
         void Info(string message, Exception ex = null, [CallerMemberName] string memberName = "X");
 
+        void Trace(string message, Exception ex = null, [CallerMemberName] string memberName = "X");
+
         void Warn(string message, Exception ex = null, [CallerMemberName] string memberName = "X");
     }
 

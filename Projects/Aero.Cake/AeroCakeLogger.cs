@@ -17,7 +17,6 @@ namespace Aero.Cake
     public class AeroCakeLogger : IAeroLogger
     {
         private readonly ICakeContext _cakeContext;
-        //private readonly ILogger _log;
         private readonly Type _type;
         private readonly string _typeName;
 
@@ -55,35 +54,36 @@ namespace Aero.Cake
         {
             var fullMessage = CreateMessage(message, ex, memberName);
             _cakeContext.Log.Debug(fullMessage);
-            //_log.LogDebug(ex, fullMessage);
         }
 
         public void Error(string message, Exception ex = null, [CallerMemberName] string memberName = "X")
         {
             var fullMessage = CreateMessage(message, ex, memberName);
             _cakeContext.Log.Error(fullMessage);
-            // _log.LogError(ex, fullMessage);
         }
 
         public void Fatal(string message, Exception ex = null, [CallerMemberName] string memberName = "X")
         {
             var fullMessage = CreateMessage(message, ex, memberName);
             _cakeContext.Log.Error(fullMessage);
-            // _log.LogCritical(ex, fullMessage);
         }
 
         public void Info(string message, Exception ex = null, [CallerMemberName] string memberName = "X")
         {
             var fullMessage = CreateMessage(message, ex, memberName);
             _cakeContext.Log.Information(fullMessage);
-            // _log.LogInformation(ex, fullMessage);
+        }
+
+        public void Trace(string message, Exception ex = null, [CallerMemberName] string memberName = "X")
+        {
+            var fullMessage = CreateMessage(message, ex, memberName);
+            _cakeContext.Log.Verbose(fullMessage);
         }
 
         public void Warn(string message, Exception ex = null, [CallerMemberName] string memberName = "X")
         {
             var fullMessage = CreateMessage(message, ex, memberName);
             _cakeContext.Log.Warning(fullMessage);
-            // _log.LogWarning(new EventId(), ex, fullMessage);
         }
     }
 }
