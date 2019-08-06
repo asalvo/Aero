@@ -1,5 +1,4 @@
-﻿using Cake.Common;
-using Cake.Common.Diagnostics;
+﻿using Cake.Common.Diagnostics;
 using System;
 using System.Threading.Tasks;
 
@@ -7,25 +6,6 @@ namespace Aero.Cake.Extensions
 {
     public static class AeroContextExtensions
     {
-        public static T GetArgument<T>(this AeroContext aeroContext, string name, bool isRequired = true)
-        {
-            var value = aeroContext.Argument<T>(name);
-
-            if (isRequired)
-            {
-                if(value == null)
-                    throw new ArgumentNullException(name);
-            }
-            else
-            {
-                if (value == null)
-                    return default;
-            }
-                
-
-            return value;
-        }
-
         public static void Retry(this AeroContext aeroContext, int numberOfRetries, TimeSpan timeBetweenRetries, Action<int> action)
         {
             var executionCount = 0;
