@@ -7,12 +7,21 @@ namespace Aero.Cake.Extensions
 {
     public static class AeroContextExtensions
     {
-        public static T GetArgument<T>(this AeroContext aeroContext, string name)
+        public static T GetArgument<T>(this AeroContext aeroContext, string name, bool isRequired = true)
         {
             var value = aeroContext.Argument<T>(name);
 
-            if (null == value)
-                throw new ArgumentNullException(name);
+            if (isRequired)
+            {
+                if(value == null)
+                    throw new ArgumentNullException(name);
+            }
+            else
+            {
+                if (value == null)
+                    return default;
+            }
+                
 
             return value;
         }
