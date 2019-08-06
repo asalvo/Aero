@@ -13,7 +13,7 @@ namespace Aero.Cake
             services
                 .AddSingleton<IDbUpService, DbUpService>()
                 .AddSingleton<IDotNetCoreCupCake, DotNetCoreCupCake>()
-                .AddSingleton<IVersionSevice, VersionService>();
+                .AddSingleton<IVersionService, VersionService>();
         }
     }
 }

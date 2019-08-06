@@ -9,12 +9,12 @@ using Cake.Core.IO;
 
 namespace Aero.Cake.Services
 { 
-    public interface IVersionSevice
+    public interface IVersionService
     {
         void UpdateFiles(string version, string projectPath, params string[] excludeProjectsNamed);
     }
 
-    public class VersionService : AbstractService, IVersionSevice
+    public class VersionService : AbstractService, IVersionService
     {
         public VersionService(ICakeContext cakeContext, IAeroLogger<VersionService> logger) : base(cakeContext, logger)
         {

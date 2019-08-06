@@ -12,7 +12,7 @@ namespace Aero.Build.Tasks
         public override void Run(Context context)
         {
             //Set the Version info
-            var versionService = context.ServiceProvider.GetService<IVersionSevice>();
+            var versionService = context.ServiceProvider.GetService<IVersionService>();
             versionService.UpdateFiles(context.Argument<string>("AppVersion"), context.ProjectsPath, "VersionAttributeDoesNotExist");
 
             //Check out the docs on DotNetCore settings. There are some things we want to set, like Configuration, and the replacement for rebuild. 

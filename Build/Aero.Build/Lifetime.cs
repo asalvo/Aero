@@ -36,7 +36,7 @@ namespace Aero.Build
                 .AddSingleton(_ => context)
                 .AddSingleton<IDotNetCoreCupCake, DotNetCoreCupCake>()
                 .AddSingleton(typeof(IAeroLogger<>), typeof(AeroCakeLogger<>))
-                .AddSingleton<IVersionSevice, VersionService>();
+                .AddSingleton<IVersionService, VersionService>();
 
             return services.BuildServiceProvider();
         }
