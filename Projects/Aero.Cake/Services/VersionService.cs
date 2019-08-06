@@ -34,6 +34,8 @@ namespace Aero.Cake.Services
             var csprojFiles = CakeContext.GetFiles($"{projectPath}/**/*.csproj");
             var excludeProjectsNamedLower = excludeProjectsNamed.Select(x => x.ToLowerInvariant()).ToArray();
 
+            Logger.Debug($"CsProjCount: {csprojFiles.Count}, ExcludedCount: {excludeProjectsNamed.Length}");
+
             foreach(var f in csprojFiles)
             {
                 if(!excludeProjectsNamedLower.Contains(f.GetFilenameWithoutExtension().FullPath.ToLowerInvariant()))
@@ -44,8 +46,13 @@ namespace Aero.Cake.Services
 
         private void UpdateCsProjFile(FilePath filePath, string version)
         {
+            Logger.Trace($"Update csproj for version. Version: {version}, File: {filePath}");
+
             if (!CakeContext.XmlPeek(filePath, "/Project/@Sdk").StartsWith("Microsoft.NET.Sdk"))
+            {
+                Logger.Warn("Ignoring csproj, no @Sdk attribute. Version: {version}, File: {filePath}");
                 return;
+            }
 
             const string semver = @"^(\d+\.\d+\.\d+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$";
             var regex = new Regex(semver);
