@@ -12,8 +12,6 @@ namespace Aero.Cake
         {
         }
 
-        public IServiceProvider ServiceProvider { get; set; }
-
         public IFile GetNormalizedFile(string relativePath, bool throwIfNotExists = true)
         {
             var normalizedPath = GetNormalizedPath(relativePath);
