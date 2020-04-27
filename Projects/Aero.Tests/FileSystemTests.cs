@@ -7,14 +7,14 @@ using Xunit;
 
 namespace Aero.Common
 {
-    public class FileSystemTests
+    public sealed class FileSystemTests : IDisposable
     {
         private readonly DirectoryInfo _testDirectory;
 
         public FileSystemTests()
         {
             var fi = new FileInfo(GetType().Assembly.Location);
-            _testDirectory = new DirectoryInfo(Path.Combine(fi.DirectoryName, "FileSystemTests"));
+            _testDirectory = new DirectoryInfo(Path.Combine(fi.DirectoryName, $"FileSystemTests-{Guid.NewGuid()}"));
 
             if (_testDirectory.Exists)
             {
@@ -24,12 +24,14 @@ namespace Aero.Common
             _testDirectory.Create();
         }
 
-        ~FileSystemTests()
+        public void Dispose()
         {
             if (_testDirectory == null)
             {
                 return;
             }
+
+            _testDirectory.Refresh();
 
             if (_testDirectory.Exists)
             {
@@ -157,8 +159,8 @@ namespace Aero.Common
             _testDirectory.GetDirectories().Length.Should().Be(1);
             var createdDate = _testDirectory.GetDirectories().Single(x=>x.FullName == newDirectoryName).CreationTimeUtc;
 
-            //Sleep long enough to allow system time to "tick"
-            System.Threading.Thread.Sleep(50);
+            //Sleep long enough to allow system time to "tick" as well as run into any test parallelization issues. 
+            System.Threading.Thread.Sleep(1250);
 
             //Act
             fs.CreateDirectory(newDirectoryName);

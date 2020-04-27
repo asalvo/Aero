@@ -36,7 +36,7 @@ namespace Aero.Infrastructure
         public void CreateDirectory(string directoryPath)
         {
             var di = new DirectoryInfo(directoryPath);
-            if (di.Exists == false)
+            if (!di.Exists)
             {
                 di.Create();
             }
