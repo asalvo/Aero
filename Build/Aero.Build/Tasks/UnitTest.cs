@@ -1,25 +1,29 @@
-﻿using Aero.Cake.CupCakes;
+﻿using Aero.Cake.Services;
 using Cake.Common.Tools.DotNetCore.Test;
 using Cake.Frosting;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Aero.Build.Tasks
 {
-    public class UnitTest : FrostingTask<Context>
+    public class UnitTest : FrostingTask<MyContext>
     {
-        public override void Run(Context context)
-        {
-            var dotNetCore = context.ServiceProvider.GetService<IDotNetCoreCupCake>();
+        private readonly IDotNetCoreService _dotNetCore;
 
+        public UnitTest(IDotNetCoreService dotNetCore)
+        {
+            _dotNetCore = dotNetCore;
+        }
+
+        public override void Run(MyContext context)
+        {
             var testSettings = new DotNetCoreTestSettings
             {
-                Configuration = context.Configuration,
+                Configuration = context.BuildConfiguration,
                 Logger = "trx"
             };
 
-            dotNetCore.Test($"{context.ProjectsPath}/Aero.Tests/Aero.Tests.csproj", testSettings);
-            dotNetCore.Test($"{context.ProjectsPath}/Aero.Azure.Tests/Aero.Azure.Tests.csproj", testSettings);
-            dotNetCore.Test($"{context.ProjectsPath}/Aero.Cake.Tests/Aero.Cake.Tests.csproj", testSettings);
+            _dotNetCore.Test($"{context.ProjectsPath}/Aero.Tests/Aero.Tests.csproj", testSettings);
+            _dotNetCore.Test($"{context.ProjectsPath}/Aero.Azure.Tests/Aero.Azure.Tests.csproj", testSettings);
+            _dotNetCore.Test($"{context.ProjectsPath}/Aero.Cake.Tests/Aero.Cake.Tests.csproj", testSettings);
         }
     }
 }

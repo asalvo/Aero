@@ -3,11 +3,13 @@ using Cake.Common.Tools.DotNetCore.Build;
 using Cake.Common.Tools.DotNetCore.Pack;
 using Cake.Common.Tools.DotNetCore.Publish;
 using Cake.Common.Tools.DotNetCore.Test;
-using Cake.Core;
 
-namespace Aero.Cake.CupCakes
+namespace Aero.Cake.Services
 {
-    public interface IDotNetCoreCupCake
+    /// <summary>
+    /// A wrapper class around DotNetCore extensions methods to support unit testing in tasks. 
+    /// </summary>
+    public interface IDotNetCoreService
     {
         void Build(string projectPath, DotNetCoreBuildSettings settings);
         void Pack(string projectPath, DotNetCorePackSettings settings);
@@ -15,33 +17,31 @@ namespace Aero.Cake.CupCakes
         void Test(string projectPath, DotNetCoreTestSettings settings);
     }
 
-    public class DotNetCoreCupCake : IDotNetCoreCupCake
+    public class DotNetCoreService : AbstractService, IDotNetCoreService
     {
-        private readonly ICakeContext _context;
-
-        public DotNetCoreCupCake(ICakeContext context)
+        public DotNetCoreService(AeroContext myContext) : base(myContext)
         {
-            _context = context;
+
         }
 
         public void Build(string projectPath, DotNetCoreBuildSettings settings)
         {
-            _context.DotNetCoreBuild(projectPath, settings);
+            AeroContext.DotNetCoreBuild(projectPath, settings);
         }
 
         public void Pack(string projectPath, DotNetCorePackSettings settings)
         {
-            _context.DotNetCorePack(projectPath, settings);
+            AeroContext.DotNetCorePack(projectPath, settings);
         }
 
         public void Publish(string projectPath, DotNetCorePublishSettings settings)
         {
-            _context.DotNetCorePublish(projectPath, settings);
+            AeroContext.DotNetCorePublish(projectPath, settings);
         }
 
         public void Test(string projectPath, DotNetCoreTestSettings settings)
         {
-            _context.DotNetCoreTest(projectPath, settings);
+            AeroContext.DotNetCoreTest(projectPath, settings);
         }
     }
 }

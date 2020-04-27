@@ -3,9 +3,9 @@ using Cake.Frosting;
 
 namespace Aero.Build.Tasks
 { 
-    public class Clean : FrostingTask<Context>
+    public class Clean : FrostingTask<MyContext>
     {
-        public override void Run(Context context)
+        public override void Run(MyContext context)
         {
             //Aero.Build references Aero.Cake -> Aero. We'll execute Aero.Build in debug, but build
             //Aero under release, so just clean Release. 

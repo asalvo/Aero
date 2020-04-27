@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Aero.Cake;
+using Aero.Cake.Services;
+using Cake.Core.Composition;
 using Cake.Frosting;
 
 namespace Aero.Build
@@ -14,22 +16,18 @@ namespace Aero.Build
                 .Build();
 
             // Run the host.
-            var exitCode = host.Run();
-
-            if (Convert.ToBoolean(Environment.GetEnvironmentVariable("IsVisualStudio")))
-            {
-                Console.WriteLine("Press enter (maybe twice) to exit");
-                Console.Read();
-            }
-
-            return exitCode;
+            return host.Run();
         }
 
         public void Configure(ICakeServices services)
         {
-            services.UseContext<Context>();
-            services.UseLifetime<Lifetime>();
             services.UseWorkingDirectory("..");
+            services.UseContext<MyContext>();
+            services.UseLifetime<Lifetime>();
+
+            services.RegisterType<MyContext>().As<AeroContext>();
+
+            services.RegisterType<DotNetCoreService>().As<IDotNetCoreService>().Singleton();
         }
     }
 }

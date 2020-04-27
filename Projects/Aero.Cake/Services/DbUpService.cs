@@ -1,6 +1,7 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 using System.Reflection;
-using Aero.Infrastructure;
+using Cake.Common.Diagnostics;
 using Cake.Core;
 using Cake.Core.Diagnostics;
 using DbUp;
@@ -10,47 +11,59 @@ namespace Aero.Cake.Services
 {
     public interface IDbUpService
     {
-        void  Upgrade(string server, string database, string username, string password);
+        void Upgrade(string server, string database, string username, string password, string tenantId = null);
     }
 
     public class DbUpService : AbstractService, IDbUpService
     {
-        public DbUpService(ICakeContext cakeContext, IAeroLogger<DbUpService> logger) : base(cakeContext, logger)
+        public DbUpService(AeroContext aeroContext) : base(aeroContext)
         {
         }
 
-        public void Upgrade(string server, string database, string username, string password)
+        public void Upgrade(string server, string database, string username, string password, string tenantId = null)
         {
-            var csb = CreateSqlConnectionStringBuilder(server, database, username, password);
-            
-            var usernameAudit = string.IsNullOrWhiteSpace(username) ? "IntegratedAuth" : username;
-            CakeContext.Log.Information($"Server: {csb.DataSource}, Database: {csb.InitialCatalog}, Username: {usernameAudit}");
+            var csb = CreateSqlConnectionStringBuilder(server, database, username, password, tenantId);
+            var connectionString = csb.ConnectionString;
 
-            var upgrader = DeployChanges.To
-                .SqlDatabase(csb.ConnectionString)
+            var usernameAudit = string.IsNullOrWhiteSpace(username) ? "IntegratedAuth" : username;
+            AeroContext.Information($"Server: {csb.DataSource}, Database: {csb.InitialCatalog}, Username: {usernameAudit}");
+
+            var useAzureSecurity = false;
+            if (!string.IsNullOrWhiteSpace(tenantId))
+            {
+                //https://docs.microsoft.com/en-us/azure/key-vault/service-to-service-authentication#running-the-application-using-managed-identity
+                useAzureSecurity = true;
+                Environment.SetEnvironmentVariable("AzureServicesAuthConnectionString", $"RunAs=App;AppId={username};TenantId={tenantId};AppKey={password}");
+            }
+
+            var upgrade = DeployChanges.To
+                .SqlDatabase(connectionString, null, useAzureSecurity)
                 .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
-                .LogTo(new CakeDbUpLogger(CakeContext))
+                .LogTo(new CakeDbUpLogger(AeroContext))
                 .Build();
 
-            upgrader.PerformUpgrade();
+            var result = upgrade.PerformUpgrade();
+            if (!result.Successful)
+            {
+                throw new Exception("Failed to updated database");
+            }
         }
 
-        private SqlConnectionStringBuilder CreateSqlConnectionStringBuilder(string server, string database, string username, string password)
+        private SqlConnectionStringBuilder CreateSqlConnectionStringBuilder(string server, string database, string username, string password, string tenantId)
         {
-            
-
             var csb = new SqlConnectionStringBuilder
             {
                 DataSource = server,
                 InitialCatalog = database,
-                ApplicationName = "StormEx.Backend.Build"
             };
 
+            //If no username then assume integrated security
             if (string.IsNullOrWhiteSpace(username))
             {
                 csb.IntegratedSecurity = true;
             }
-            else
+            //If there is a username but no tenantId, then assume SQL authentication
+            else if (string.IsNullOrWhiteSpace(tenantId))
             {
                 csb.UserID = username;
                 csb.Password = password;
@@ -84,6 +97,4 @@ namespace Aero.Cake.Services
             }
         }
     }
-
-    
 }

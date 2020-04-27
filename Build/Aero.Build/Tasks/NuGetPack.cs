@@ -1,53 +1,58 @@
 ﻿using System;
-using Aero.Cake.CupCakes;
+using Aero.Build.WellKnown;
+using Aero.Cake.Services;
 using Cake.Common;
 using Cake.Common.Tools.DotNetCore.Pack;
 using Cake.Core;
 using Cake.Core.IO;
 using Cake.Frosting;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Aero.Build.Tasks
 {
-    public class NuGetPack : FrostingTask<Context>
+    public class NuGetPack : FrostingTask<MyContext>
     {
-        public override void Run(Context context)
-        {
-            var appVersion = context.Argument<string>("AppVersion");
-            
-            var dotNetCore = context.ServiceProvider.GetService<IDotNetCoreCupCake>();
+        private readonly IDotNetCoreService _dotNetCore;
 
+        public NuGetPack(IDotNetCoreService dotNetCore)
+        {
+            _dotNetCore = dotNetCore;
+        }
+
+        public override void Run(MyContext context)
+        {
+            var appVersion = context.Argument<string>(ArgumentNames.AppVersion);
+            
             //https://github.com/NuGet/Home/wiki/Adding-nuget-pack-as-a-msbuild-target
             var settings = new DotNetCorePackSettings
             {
-                Configuration = context.Configuration,
+                Configuration = context.BuildConfiguration,
                 NoBuild = true,
                 ArgumentCustomization = args => args
                     .Append($"/p:Version={appVersion}")
                     .Append($"/p:Copyright=\"Copyright {DateTime.UtcNow.Year} Adam Salvo\"")
             };
             
-            PackAero(context, dotNetCore, settings);
-            PackAeroAzure(context, dotNetCore, settings);
-            PackAeroCake(context, dotNetCore, settings);
+            PackAero(context, settings);
+            PackAeroAzure(context, settings);
+            PackAeroCake(context, settings);
         }
 
-        private void PackAero(Context context, IDotNetCoreCupCake dotNetCore, DotNetCorePackSettings defaultSettings)
+        private void PackAero(MyContext context, DotNetCorePackSettings defaultSettings)
         {
-            var path = new FilePath($"{context.ProjectsPath}/Aero/Aero.csproj");
-            dotNetCore.Pack(path.FullPath, defaultSettings);
+            var path = new FilePath($"{context.ProjectsPath}/{Projects.Aero}/{Projects.Aero}.csproj");
+            _dotNetCore.Pack(path.FullPath, defaultSettings);
         }
 
-        private void PackAeroAzure(Context context, IDotNetCoreCupCake dotNetCore, DotNetCorePackSettings defaultSettings)
+        private void PackAeroAzure(MyContext context, DotNetCorePackSettings defaultSettings)
         {
-            var path = new FilePath($"{context.ProjectsPath}/Aero.Azure/Aero.Azure.csproj");
-            dotNetCore.Pack(path.FullPath, defaultSettings);
+            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroAzure}/{Projects.AeroAzure}.csproj");
+            _dotNetCore.Pack(path.FullPath, defaultSettings);
         }
 
-        private void PackAeroCake(Context context, IDotNetCoreCupCake dotNetCore, DotNetCorePackSettings defaultSettings)
+        private void PackAeroCake(MyContext context, DotNetCorePackSettings defaultSettings)
         {
-            var path = new FilePath($"{context.ProjectsPath}/Aero.Cake/Aero.Cake.csproj");
-            dotNetCore.Pack(path.FullPath, defaultSettings);
+            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroCake}/{Projects.AeroCake}.csproj");
+            _dotNetCore.Pack(path.FullPath, defaultSettings);
         }
     }
 }

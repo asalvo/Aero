@@ -1,33 +1,39 @@
-﻿using Aero.Cake.CupCakes;
+﻿using Aero.Build.WellKnown;
+using Aero.Cake.Extensions;
 using Aero.Cake.Services;
 using Cake.Common;
 using Cake.Common.Tools.DotNetCore.Build;
+using Cake.Common.Tools.DotNetCore.MSBuild;
 using Cake.Frosting;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Aero.Build.Tasks
 {
-    public class Build : FrostingTask<Context>
+    public class Build : FrostingTask<MyContext>
     {
-        public override void Run(Context context)
-        {
-            //Set the Version info
-            var versionService = context.ServiceProvider.GetService<IVersionService>();
-            versionService.UpdateFiles(context.Argument<string>("AppVersion"), context.ProjectsPath, "VersionAttributeDoesNotExist");
+        private IDotNetCoreService _dotNetCore;
 
-            //Check out the docs on DotNetCore settings. There are some things we want to set, like Configuration, and the replacement for rebuild. 
+        public Build(IDotNetCoreService dotNetCoreService)
+        {
+            _dotNetCore = dotNetCoreService;
+        }
+
+        public override void Run(MyContext context)
+        {
+            var version = context.Argument<string>(ArgumentNames.AppVersion);
 
             var buildSettings = new DotNetCoreBuildSettings
             {
-                Configuration = context.Configuration,
-                NoIncremental = true
+                Configuration = context.BuildConfiguration,
+                NoIncremental = true,
+                MSBuildSettings = new DotNetCoreMSBuildSettings()
             };
 
-            var dotNetCore = context.ServiceProvider.GetService<IDotNetCoreCupCake>();
+            buildSettings.MSBuildSettings.SetAllVersions(version);
 
             //This build project is going to build everything in debug mode. Then we will build in release mode. 
-            dotNetCore.Build($"{context.ProjectsPath}/Aero.Azure/Aero.Azure.csproj", buildSettings);
-            dotNetCore.Build($"{context.ProjectsPath}/Aero.Cake/Aero.Cake.csproj", buildSettings);
+            _dotNetCore.Build($"{context.ProjectsPath}/{Projects.Aero}/{Projects.Aero}.csproj", buildSettings);
+            _dotNetCore.Build($"{context.ProjectsPath}/{Projects.AeroAzure}/{Projects.AeroAzure}.csproj", buildSettings);
+            _dotNetCore.Build($"{context.ProjectsPath}/{Projects.AeroCake}/{Projects.AeroCake}.csproj", buildSettings);
         }
     }
 }

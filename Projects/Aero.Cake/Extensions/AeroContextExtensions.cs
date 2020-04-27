@@ -41,7 +41,6 @@ namespace Aero.Cake.Extensions
         /// <param name="aeroContext"></param>
         /// <param name="action"></param>
         /// <param name="millisecondsTimeout"></param>
-        /// <returns></returns>
         /// <remarks>
         /// This code was adapted from https://devblogs.microsoft.com/pfxteam/crafting-a-task-timeoutafter-method/. It is
         /// a method of a self-completing action under a given time limit. It is expected that the action will loop

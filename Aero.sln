@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aero", "Projects\Aero\Aero.csproj", "{A5F20BAA-8485-4F06-A598-443AC93D1BBB}"
 EndProject
@@ -17,10 +17,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aero.Tests", "Projects\Aero
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{69027881-6F9C-4D99-B936-676FD711A355}"
 	ProjectSection(SolutionItems) = preProject
-		build.ps1 = build.ps1
+		Build\readme.md = Build\readme.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aero.Build", "Build\Aero.Build\Aero.Build.csproj", "{CCF6794C-85ED-4A41-8106-696EA2630DD0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4C43F53A-40DE-44D7-9BEA-A04232B896DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,9 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{E157E514-BF08-49B3-A0FF-8E0ED1FC5346} = {4C43F53A-40DE-44D7-9BEA-A04232B896DE}
+		{EB3E3A30-450E-4841-BD4D-3B9A8935BCF7} = {4C43F53A-40DE-44D7-9BEA-A04232B896DE}
+		{2A6DD449-5BFC-4E13-A9AC-CA0ED1CE7816} = {4C43F53A-40DE-44D7-9BEA-A04232B896DE}
 		{CCF6794C-85ED-4A41-8106-696EA2630DD0} = {69027881-6F9C-4D99-B936-676FD711A355}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

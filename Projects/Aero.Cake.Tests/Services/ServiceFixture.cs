@@ -7,10 +7,8 @@ namespace Aero.Cake.Services
     {
         public ServiceFixture()
         {
-            Logger = Substitute.For<IAeroLogger<T>>();
-        }
 
-        public IAeroLogger<T> Logger;
+        }
 
         public T ServiceUnderTest { get; set; }
     }

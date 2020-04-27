@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using NSubstitute;
 
 namespace Aero.Cake
 {
@@ -11,27 +10,13 @@ namespace Aero.Cake
 
         protected TestFixture()
         {
-            CakeContext = new CakeContextFixture();
-            ServiceProvider = Substitute.For<IServiceProvider>();
-
-            MyContext = new MyContextTester(CakeContext)
-            {
-                
-            };
+            MockContext = new CakeContextMock();
+            MyContext = new MyContext(MockContext);
         }
 
-        public CakeContextFixture CakeContext { get; }
+        public CakeContextMock MockContext { get; }
 
-        public MyContextTester MyContext { get; }
-
-        public IServiceProvider ServiceProvider { get; }
-
-        public T AddService<T>() where T : class
-        {
-            var sub = Substitute.For<T>();
-            ServiceProvider.GetService(typeof(T)).Returns(sub);
-            return sub;
-        }
+        public MyContext MyContext { get; }
 
         public string TestDirectory
         {

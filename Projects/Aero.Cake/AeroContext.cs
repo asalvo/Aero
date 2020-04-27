@@ -1,7 +1,6 @@
 ﻿using Cake.Core;
 using Cake.Core.IO;
 using Cake.Frosting;
-using System;
 using System.IO;
 
 namespace Aero.Cake
