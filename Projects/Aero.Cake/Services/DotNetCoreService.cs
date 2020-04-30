@@ -1,5 +1,7 @@
 ﻿using Cake.Common.Tools.DotNetCore;
 using Cake.Common.Tools.DotNetCore.Build;
+using Cake.Common.Tools.DotNetCore.NuGet.Delete;
+using Cake.Common.Tools.DotNetCore.NuGet.Push;
 using Cake.Common.Tools.DotNetCore.Pack;
 using Cake.Common.Tools.DotNetCore.Publish;
 using Cake.Common.Tools.DotNetCore.Test;
@@ -12,6 +14,8 @@ namespace Aero.Cake.Services
     public interface IDotNetCoreService
     {
         void Build(string projectPath, DotNetCoreBuildSettings settings);
+        void NuGetDelete(string projectPath, DotNetCoreNuGetDeleteSettings settings);
+        void NuGetPush(string projectPath, DotNetCoreNuGetPushSettings settings);
         void Pack(string projectPath, DotNetCorePackSettings settings);
         void Publish(string projectPath, DotNetCorePublishSettings settings);
         void Test(string projectPath, DotNetCoreTestSettings settings);
@@ -27,6 +31,16 @@ namespace Aero.Cake.Services
         public void Build(string projectPath, DotNetCoreBuildSettings settings)
         {
             AeroContext.DotNetCoreBuild(projectPath, settings);
+        }
+
+        public void NuGetDelete(string projectPath, DotNetCoreNuGetDeleteSettings settings)
+        {
+            AeroContext.DotNetCoreNuGetDelete(projectPath, settings);
+        }
+
+        public void NuGetPush(string projectPath, DotNetCoreNuGetPushSettings settings)
+        {
+            AeroContext.DotNetCoreNuGetPush(projectPath, settings);
         }
 
         public void Pack(string projectPath, DotNetCorePackSettings settings)
