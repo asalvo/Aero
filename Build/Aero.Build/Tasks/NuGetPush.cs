@@ -18,6 +18,7 @@ namespace Aero.Build.Tasks
 
         public override void Run(MyContext context)
         {
+            var appVersion = context.Argument<string>(ArgumentNames.AppVersion);
             var nuGetFeedPassword = context.Argument<string>(ArgumentNames.NuGetFeedPassword);
             var nuGetFeedUrl = context.Argument(ArgumentNames.NuGetFeedUrl, "https://api.nuget.org/v3/index.json");
 
@@ -27,26 +28,28 @@ namespace Aero.Build.Tasks
                 Source = nuGetFeedUrl
             };
             
-            PushAero(context, settings);
-            PushAeroAzure(context, settings);
-            PushAeroCake(context, settings);
+            appVersion = appVersion.Replace("")
+
+            PushAero(context, appVersion, settings);
+            PushAeroAzure(context, appVersion, settings);
+            PushAeroCake(context, appVersion, settings);
         }
 
-        private void PushAero(MyContext context, DotNetCoreNuGetPushSettings defaultSettings)
+        private void PushAero(MyContext context, string appVersion, DotNetCoreNuGetPushSettings defaultSettings)
         {
-            var path = new FilePath($"{context.ProjectsPath}/{Projects.Aero}/{Projects.Aero}.csproj");
+            var path = new FilePath($"{context.ProjectsPath}/{Projects.Aero}/{Projects.Aero}/obj/{context.BuildConfiguration}/{Projects.Aero}.{appVersion}.nuspec");
             _dotNetCore.NuGetPush(path.FullPath, defaultSettings);
         }
 
-        private void PushAeroAzure(MyContext context, DotNetCoreNuGetPushSettings defaultSettings)
+        private void PushAeroAzure(MyContext context, string appVersion, DotNetCoreNuGetPushSettings defaultSettings)
         {
-            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroAzure}/{Projects.AeroAzure}.csproj");
+            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroAzure}/{Projects.AeroAzure}/obj/{context.BuildConfiguration}/{Projects.AeroAzure}.{appVersion}.nuspec");
             _dotNetCore.NuGetPush(path.FullPath, defaultSettings);
         }
 
-        private void PushAeroCake(MyContext context, DotNetCoreNuGetPushSettings defaultSettings)
+        private void PushAeroCake(MyContext context, string appVersion, DotNetCoreNuGetPushSettings defaultSettings)
         {
-            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroCake}/{Projects.AeroCake}.csproj");
+            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroCake}/{Projects.AeroCake}/obj/{context.BuildConfiguration}/{Projects.AeroCake}.{appVersion}.nuspec");
             _dotNetCore.NuGetPush(path.FullPath, defaultSettings);
         }
     }
