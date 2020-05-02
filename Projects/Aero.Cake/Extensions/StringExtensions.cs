@@ -28,7 +28,7 @@ namespace Aero.Cake.Extensions
             return version;
         }
 
-        public static string ParseVersionForNuSpec(this string version)
+        public static string ParseVersionForNuPkg(this string version)
         {
             const string semver = @"^(\d+\.\d+\.\d+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$";
             var regex = new Regex(semver);
@@ -36,7 +36,7 @@ namespace Aero.Cake.Extensions
 
             if (match.Success)
             {
-                version = string.IsNullOrWhiteSpace(match.Groups[3].Value) ? match.Groups[1].Value : $"{match.Groups[1]}{match.Groups[3].Value}.{match.Groups[3]}";
+                version = string.IsNullOrWhiteSpace(match.Groups[2].Value) ? $"{match.Groups[1]}" : $"{match.Groups[1]}-{match.Groups[2]}";
             }
             else
             {
