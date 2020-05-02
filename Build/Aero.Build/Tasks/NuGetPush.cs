@@ -38,19 +38,19 @@ namespace Aero.Build.Tasks
 
         private void PushAero(MyContext context, string appVersion, DotNetCoreNuGetPushSettings defaultSettings)
         {
-            var path = new FilePath($"{context.ProjectsPath}/{Projects.Aero}/obj/{context.BuildConfiguration}/{Projects.Aero}.{appVersion}.nupkg");
+            var path = new FilePath($"{context.ProjectsPath}/{Projects.Aero}/bin/{context.BuildConfiguration}/{Projects.Aero}.{appVersion}.nupkg");
             _dotNetCore.NuGetPush(path.FullPath, defaultSettings);
         }
 
         private void PushAeroAzure(MyContext context, string appVersion, DotNetCoreNuGetPushSettings defaultSettings)
         {
-            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroAzure}/obj/{context.BuildConfiguration}/{Projects.AeroAzure}.{appVersion}.nupkg");
+            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroAzure}/bin/{context.BuildConfiguration}/{Projects.AeroAzure}.{appVersion}.nupkg");
             _dotNetCore.NuGetPush(path.FullPath, defaultSettings);
         }
 
         private void PushAeroCake(MyContext context, string appVersion, DotNetCoreNuGetPushSettings defaultSettings)
         {
-            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroCake}/obj/{context.BuildConfiguration}/{Projects.AeroCake}.{appVersion}.nupkg");
+            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroCake}/bin/{context.BuildConfiguration}/{Projects.AeroCake}.{appVersion}.nupkg");
             _dotNetCore.NuGetPush(path.FullPath, defaultSettings);
         }
     }
