@@ -18,7 +18,7 @@
   
   <ItemGroup>
     <PackageReference Include="Cake.Frosting" Version="0.37.0" />
-    <PackageReference Include="dbup" Version="4.3.0" />
+    <PackageReference Include="dbup" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>

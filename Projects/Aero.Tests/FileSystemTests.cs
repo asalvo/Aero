@@ -141,7 +141,7 @@ namespace Aero.Common
             //Assert
             var subDirs = _testDirectory.GetDirectories();
             subDirs.Count().Should().Be(1);
-            subDirs.Single(di => di.FullName == newDirectoryName).CreationTimeUtc.Should().BeCloseTo(now,2000);
+            subDirs.Single(di => di.FullName == newDirectoryName).CreationTimeUtc.Should().BeCloseTo(now, TimeSpan.FromSeconds(2));
         }
 
         [Fact]
