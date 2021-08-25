@@ -1,4 +1,4 @@
-﻿using Aero.Cake.Services;
+﻿using Aero.Cake.Features.DotNet.Wrappers;
 using Cake.Common.Tools.DotNetCore.Test;
 using Cake.Frosting;
 
@@ -6,9 +6,9 @@ namespace Aero.Build.Tasks
 {
     public class UnitTest : FrostingTask<MyContext>
     {
-        private readonly IDotNetCoreService _dotNetCore;
+        private readonly IDotNetCoreWrapper _dotNetCore;
 
-        public UnitTest(IDotNetCoreService dotNetCore)
+        public UnitTest(IDotNetCoreWrapper dotNetCore)
         {
             _dotNetCore = dotNetCore;
         }
@@ -18,11 +18,10 @@ namespace Aero.Build.Tasks
             var testSettings = new DotNetCoreTestSettings
             {
                 Configuration = context.BuildConfiguration,
-                Logger = "trx"
+                Loggers = new[] {"trx"}
             };
 
             _dotNetCore.Test($"{context.ProjectsPath}/Aero.Tests/Aero.Tests.csproj", testSettings);
-            _dotNetCore.Test($"{context.ProjectsPath}/Aero.Azure.Tests/Aero.Azure.Tests.csproj", testSettings);
             _dotNetCore.Test($"{context.ProjectsPath}/Aero.Cake.Tests/Aero.Cake.Tests.csproj", testSettings);
         }
     }

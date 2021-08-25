@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Cake.Core;
 using Cake.Core.Configuration;
@@ -8,11 +8,11 @@ using Cake.Core.Tooling;
 using Cake.Testing;
 using NSubstitute;
 
-namespace Aero.Cake
+namespace Aero.Cake.TestSupport
 {
-    public class CakeContextMock : ICakeContext
+    public class MockContext : ICakeContext
     {
-        public CakeContextMock()
+        public MockContext()
         {
             Arguments = new CakeArguments();
             Environment = FakeEnvironment.CreateUnixEnvironment();
@@ -21,6 +21,7 @@ namespace Aero.Cake
             Log = new FakeLog();
 
             var configuration = new FakeConfiguration();
+            Configuration = configuration;
             Registry = new WindowsRegistry();
             Tools = new ToolLocator(Environment, new ToolRepository(Environment), new ToolResolutionStrategy(FileSystem, Environment, Globber, configuration, Log));
             ProcessRunner = new ProcessRunner(FileSystem, Environment, Log, Tools, configuration);
@@ -29,12 +30,11 @@ namespace Aero.Cake
         public CakeArguments Arguments { get; }
         ICakeArguments ICakeContext.Arguments => Arguments;
 
-        public ICakeConfiguration Configuration { get; }
+        public FakeEnvironment Environment { get; set; }
+        ICakeEnvironment ICakeContext.Environment => Environment;
 
         public ICakeDataResolver Data => throw new NotImplementedException("Not Implemented in CakeContextMock");
-
-        public FakeEnvironment Environment { get; }
-        ICakeEnvironment ICakeContext.Environment => Environment;
+        public ICakeConfiguration Configuration { get; }
 
         public FakeFileSystem FileSystem { get; }
         IFileSystem ICakeContext.FileSystem => FileSystem;
@@ -52,7 +52,7 @@ namespace Aero.Cake
     }
 
     public class CakeArguments : ICakeArguments
-    {    
+    {
         public CakeArguments()
         {
             Arguments = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -69,12 +69,7 @@ namespace Aero.Cake
 
         public ICollection<string> GetArguments(string name)
         {
-            throw new NotImplementedException();
-        }
-
-        public string GetArgument(string name)
-        {
-            return Arguments.ContainsKey(name) ? Arguments[name] : null;
+            return Arguments.TryGetValue(name, out var arguments) ? new[] { arguments } : Array.Empty<string>();
         }
     }
 }

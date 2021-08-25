@@ -5,9 +5,16 @@ using System.IO;
 
 namespace Aero.Cake
 {
-    public abstract class AeroContext : FrostingContext
+    public interface IAeroContext : IFrostingContext
     {
-        public AeroContext(ICakeContext context) : base(context)
+        IDirectory GetNormalizedDirectory(string relativePath);
+        IFile GetNormalizedFile(string relativePath, bool throwIfNotExists = true);
+        string GetNormalizedPath(string relativePath);
+    }
+
+    public abstract class AeroContext : FrostingContext, IAeroContext
+    {
+        protected AeroContext(ICakeContext context) : base(context)
         {
         }
 

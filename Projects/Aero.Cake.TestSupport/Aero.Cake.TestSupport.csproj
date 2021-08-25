@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Salvoz</Authors>
+    <Description>Common Cake (Frosting) Test Support library for Aero projects</Description>
+    <PackageProjectUrl>https://github.com/asalvo/Aero</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/asalvo/Aero/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/asalvo/Aero</RepositoryUrl>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cake.Frosting" Version="1.1.0" />
+    <PackageReference Include="Cake.Testing" Version="1.1.0" />
+    <PackageReference Include="NSubstitute" Version="4.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Aero.Cake\Aero.Cake.csproj" />
+  </ItemGroup>
+
+</Project>

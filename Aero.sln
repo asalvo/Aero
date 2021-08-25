@@ -5,10 +5,6 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aero", "Projects\Aero\Aero.csproj", "{A5F20BAA-8485-4F06-A598-443AC93D1BBB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aero.Azure", "Projects\Aero.Azure\Aero.Azure.csproj", "{726BBA07-A7D9-4C45-AC9F-69C676E217C5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aero.Azure.Tests", "Projects\Aero.Azure.Tests\Aero.Azure.Tests.csproj", "{E157E514-BF08-49B3-A0FF-8E0ED1FC5346}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aero.Cake", "Projects\Aero.Cake\Aero.Cake.csproj", "{D3202182-C3C1-4EDC-AC76-F26C7D570340}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aero.Cake.Tests", "Projects\Aero.Cake.Tests\Aero.Cake.Tests.csproj", "{EB3E3A30-450E-4841-BD4D-3B9A8935BCF7}"
@@ -24,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aero.Build", "Build\Aero.Bu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4C43F53A-40DE-44D7-9BEA-A04232B896DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aero.Cake.TestSupport", "Projects\Aero.Cake.TestSupport\Aero.Cake.TestSupport.csproj", "{5EF3DBD3-7156-4D56-9615-FF14F06A3D1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,14 +32,6 @@ Global
 		{A5F20BAA-8485-4F06-A598-443AC93D1BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5F20BAA-8485-4F06-A598-443AC93D1BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5F20BAA-8485-4F06-A598-443AC93D1BBB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{726BBA07-A7D9-4C45-AC9F-69C676E217C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{726BBA07-A7D9-4C45-AC9F-69C676E217C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{726BBA07-A7D9-4C45-AC9F-69C676E217C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{726BBA07-A7D9-4C45-AC9F-69C676E217C5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E157E514-BF08-49B3-A0FF-8E0ED1FC5346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E157E514-BF08-49B3-A0FF-8E0ED1FC5346}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E157E514-BF08-49B3-A0FF-8E0ED1FC5346}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E157E514-BF08-49B3-A0FF-8E0ED1FC5346}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D3202182-C3C1-4EDC-AC76-F26C7D570340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D3202182-C3C1-4EDC-AC76-F26C7D570340}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3202182-C3C1-4EDC-AC76-F26C7D570340}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -58,12 +48,15 @@ Global
 		{CCF6794C-85ED-4A41-8106-696EA2630DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCF6794C-85ED-4A41-8106-696EA2630DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCF6794C-85ED-4A41-8106-696EA2630DD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EF3DBD3-7156-4D56-9615-FF14F06A3D1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EF3DBD3-7156-4D56-9615-FF14F06A3D1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EF3DBD3-7156-4D56-9615-FF14F06A3D1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EF3DBD3-7156-4D56-9615-FF14F06A3D1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{E157E514-BF08-49B3-A0FF-8E0ED1FC5346} = {4C43F53A-40DE-44D7-9BEA-A04232B896DE}
 		{EB3E3A30-450E-4841-BD4D-3B9A8935BCF7} = {4C43F53A-40DE-44D7-9BEA-A04232B896DE}
 		{2A6DD449-5BFC-4E13-A9AC-CA0ED1CE7816} = {4C43F53A-40DE-44D7-9BEA-A04232B896DE}
 		{CCF6794C-85ED-4A41-8106-696EA2630DD0} = {69027881-6F9C-4D99-B936-676FD711A355}

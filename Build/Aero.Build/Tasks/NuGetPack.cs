@@ -1,6 +1,7 @@
 ﻿using System;
 using Aero.Build.WellKnown;
-using Aero.Cake.Services;
+using Aero.Cake.Features.DotNet.Wrappers;
+using Aero.Cake.WellKnown;
 using Cake.Common;
 using Cake.Common.Tools.DotNetCore.Pack;
 using Cake.Core;
@@ -11,9 +12,9 @@ namespace Aero.Build.Tasks
 {
     public class NuGetPack : FrostingTask<MyContext>
     {
-        private readonly IDotNetCoreService _dotNetCore;
+        private readonly IDotNetCoreWrapper _dotNetCore;
 
-        public NuGetPack(IDotNetCoreService dotNetCore)
+        public NuGetPack(IDotNetCoreWrapper dotNetCore)
         {
             _dotNetCore = dotNetCore;
         }
@@ -33,8 +34,8 @@ namespace Aero.Build.Tasks
             };
             
             PackAero(context, settings);
-            PackAeroAzure(context, settings);
             PackAeroCake(context, settings);
+            PackAeroCakeTestSupport(context, settings);
         }
 
         private void PackAero(MyContext context, DotNetCorePackSettings defaultSettings)
@@ -43,15 +44,15 @@ namespace Aero.Build.Tasks
             _dotNetCore.Pack(path.FullPath, defaultSettings);
         }
 
-        private void PackAeroAzure(MyContext context, DotNetCorePackSettings defaultSettings)
-        {
-            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroAzure}/{Projects.AeroAzure}.csproj");
-            _dotNetCore.Pack(path.FullPath, defaultSettings);
-        }
-
         private void PackAeroCake(MyContext context, DotNetCorePackSettings defaultSettings)
         {
             var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroCake}/{Projects.AeroCake}.csproj");
+            _dotNetCore.Pack(path.FullPath, defaultSettings);
+        }
+
+        private void PackAeroCakeTestSupport(MyContext context, DotNetCorePackSettings defaultSettings)
+        {
+            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroCakeTestSupport}/{Projects.AeroCakeTestSupport}.csproj");
             _dotNetCore.Pack(path.FullPath, defaultSettings);
         }
     }

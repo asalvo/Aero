@@ -2,11 +2,11 @@
 {
     public abstract class AbstractService
     {
-        protected AbstractService(AeroContext aeroContext)
+        protected AbstractService(IAeroContext aeroContext)
         {
             AeroContext = aeroContext;
         }
 
-        protected AeroContext AeroContext { get; }
+        protected IAeroContext AeroContext { get; }
     }
 }

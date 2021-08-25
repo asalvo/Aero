@@ -1,33 +1,30 @@
 ﻿using Aero.Cake;
-using Aero.Cake.Services;
-using Cake.Core.Composition;
+using Aero.Cake.Features.DotNet.Wrappers;
 using Cake.Frosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Aero.Build
 {
-    class Program : IFrostingStartup
+    public static class Program
     {
         public static int Main(string[] args)
         {
-            // Create the host.
-            var host = new CakeHostBuilder()
-                .WithArguments(args)
-                .UseStartup<Program>()
-                .Build();
-
-            // Run the host.
-            return host.Run();
+            return new CakeHost()
+                .UseContext<MyContext>()
+                .UseLifetime<Lifetime>()
+                .ConfigureServices(ConfigureServices)
+                .Run(args);
         }
 
-        public void Configure(ICakeServices services)
+        public static void ConfigureServices(IServiceCollection services)
         {
-            services.UseWorkingDirectory("..");
-            services.UseContext<MyContext>();
-            services.UseLifetime<Lifetime>();
+            //Cake - UseContext<MyContext> registers MyContext to IFrostingContext as a singleton
+            services.AddSingleton(x => x.GetRequiredService<IFrostingContext>() as IAeroContext);
 
-            services.RegisterType<MyContext>().As<AeroContext>();
+            //Services
 
-            services.RegisterType<DotNetCoreService>().As<IDotNetCoreService>().Singleton();
+            //Wrappers
+            services.AddSingleton<IDotNetCoreWrapper, DotNetCoreWrapper>();
         }
     }
 }

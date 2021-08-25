@@ -1,6 +1,7 @@
 ﻿using Aero.Build.WellKnown;
 using Aero.Cake.Extensions;
-using Aero.Cake.Services;
+using Aero.Cake.Features.DotNet.Wrappers;
+using Aero.Cake.WellKnown;
 using Cake.Common;
 using Cake.Common.Tools.DotNetCore.Build;
 using Cake.Common.Tools.DotNetCore.MSBuild;
@@ -10,9 +11,9 @@ namespace Aero.Build.Tasks
 {
     public class Build : FrostingTask<MyContext>
     {
-        private IDotNetCoreService _dotNetCore;
+        private readonly IDotNetCoreWrapper _dotNetCore;
 
-        public Build(IDotNetCoreService dotNetCoreService)
+        public Build(IDotNetCoreWrapper dotNetCoreService)
         {
             _dotNetCore = dotNetCoreService;
         }
@@ -32,8 +33,8 @@ namespace Aero.Build.Tasks
 
             //This build project is going to build everything in debug mode. Then we will build in release mode. 
             _dotNetCore.Build($"{context.ProjectsPath}/{Projects.Aero}/{Projects.Aero}.csproj", buildSettings);
-            _dotNetCore.Build($"{context.ProjectsPath}/{Projects.AeroAzure}/{Projects.AeroAzure}.csproj", buildSettings);
             _dotNetCore.Build($"{context.ProjectsPath}/{Projects.AeroCake}/{Projects.AeroCake}.csproj", buildSettings);
+            _dotNetCore.Build($"{context.ProjectsPath}/{Projects.AeroCakeTestSupport}/{Projects.AeroCakeTestSupport}.csproj", buildSettings);
         }
     }
 }

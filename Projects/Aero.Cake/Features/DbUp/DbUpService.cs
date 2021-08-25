@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Reflection;
+using Aero.Cake.Services;
 using Cake.Common.Diagnostics;
 using Cake.Core;
 using Cake.Core.Diagnostics;
 using DbUp;
 using DbUp.Engine.Output;
 
-namespace Aero.Cake.Services
+namespace Aero.Cake.Features.DbUp
 {
     public interface IDbUpService
     {

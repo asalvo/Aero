@@ -1,6 +1,6 @@
-﻿using System;
-using Aero.Build.WellKnown;
+﻿using Aero.Build.WellKnown;
 using Aero.Cake;
+using Aero.Cake.WellKnown;
 using Cake.Common;
 using Cake.Core;
 
@@ -27,7 +27,7 @@ namespace Aero.Build
                 return System.IO.Path.Combine("../../../../projects", relativePath);
 
             if (workDirPath.EndsWith("build/aero.build"))
-                return System.IO.Path.Combine("../../project", relativePath);
+                return System.IO.Path.Combine("../../projects", relativePath);
 
             if (workDirPath.EndsWith("build"))
                 return System.IO.Path.Combine("../projects", relativePath);
