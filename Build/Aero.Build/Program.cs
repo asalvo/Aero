@@ -1,4 +1,5 @@
 ﻿using Aero.Cake;
+using Aero.Cake.Features.DotNet.Services;
 using Aero.Cake.Features.DotNet.Wrappers;
 using Cake.Frosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,7 @@ namespace Aero.Build
 
             //Wrappers
             services.AddSingleton<IDotNetCoreWrapper, DotNetCoreWrapper>();
+            services.AddSingleton<IVersionService, VersionService>();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>net5.0;netcoreapp3.1;</TargetFrameworks>
 
 	<FileVersion>1.0.0</FileVersion>
     <AssemblyVersion>1.0.0</AssemblyVersion>
@@ -33,8 +33,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Build\Aero.Build\Aero.Build.csproj" />
+    <ProjectReference Include="..\Aero.Cake.TestSupport\Aero.Cake.TestSupport.csproj" />
     <ProjectReference Include="..\Aero.Cake\Aero.Cake.csproj" />
     <ProjectReference Include="..\Aero\Aero.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Features\DotNet\Services\TestFiles\ProjectFileWith1Framework.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Features\DotNet\Services\TestFiles\ProjectFileWith2Frameworks.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

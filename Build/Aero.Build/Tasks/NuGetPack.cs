@@ -1,10 +1,8 @@
-﻿using System;
-using Aero.Build.WellKnown;
+﻿using Aero.Build.WellKnown;
+using Aero.Cake.Features.DotNet.Services;
+using Aero.Cake.Features.DotNet.Settings;
 using Aero.Cake.Features.DotNet.Wrappers;
-using Aero.Cake.WellKnown;
-using Cake.Common;
 using Cake.Common.Tools.DotNetCore.Pack;
-using Cake.Core;
 using Cake.Core.IO;
 using Cake.Frosting;
 
@@ -13,26 +11,20 @@ namespace Aero.Build.Tasks
     public class NuGetPack : FrostingTask<MyContext>
     {
         private readonly IDotNetCoreWrapper _dotNetCore;
+        private readonly IVersionService _versionService;
 
-        public NuGetPack(IDotNetCoreWrapper dotNetCore)
+        public NuGetPack(IDotNetCoreWrapper dotNetCore, IVersionService versionService)
         {
             _dotNetCore = dotNetCore;
+            _versionService = versionService;
         }
 
         public override void Run(MyContext context)
         {
-            var appVersion = context.Argument<string>(ArgumentNames.AppVersion);
-            
-            //https://github.com/NuGet/Home/wiki/Adding-nuget-pack-as-a-msbuild-target
-            var settings = new DotNetCorePackSettings
-            {
-                Configuration = context.BuildConfiguration,
-                NoBuild = true,
-                ArgumentCustomization = args => args
-                    .Append($"/p:Version={appVersion}")
-                    .Append($"/p:Copyright=\"Copyright {DateTime.UtcNow.Year} Adam Salvo\"")
-            };
-            
+            var versionModel = _versionService.ParseAppVersion();
+
+            var settings = PackSettings.Default(versionModel, "Adam Salvo");
+
             PackAero(context, settings);
             PackAeroCake(context, settings);
             PackAeroCakeTestSupport(context, settings);

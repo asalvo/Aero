@@ -1,42 +1,19 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
+﻿using System.Reflection;
+using Aero.Build;
+using Aero.Cake.TestSupport;
 
 namespace Aero.Cake
 {
-    public abstract class TestFixture
+    public abstract class TestFixture : AbstractTestFixture<MyContext>
     {
-        private static readonly Assembly TestAssembly = typeof(TestFixture).Assembly;
+        private static readonly Assembly _testAssembly = typeof(TestFixture).Assembly;
 
         protected TestFixture()
         {
-            MockContext = new CakeContextMock();
             MyContext = new MyContext(MockContext);
+            MyContext.LifetimeInitialized();
         }
 
-        public CakeContextMock MockContext { get; }
-
-        public MyContext MyContext { get; }
-
-        public string TestDirectory
-        {
-            get
-            {
-                var fi = new FileInfo(TestAssembly.CodeBase.Replace("file:///", string.Empty));
-                return fi.Directory.FullName;
-            }
-        }
-
-        public Byte[] ReadFile(string filePath)
-        {
-            var fi = new FileInfo(filePath);
-            var bytes = new byte[fi.Length];
-            using(var reader = fi.OpenRead())
-            {
-                reader.Read(bytes, 0, (int)fi.Length);
-            }
-            return bytes;
-        }
+        protected override Assembly TestAssembly => _testAssembly;
     }
-
 }
