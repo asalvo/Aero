@@ -12,8 +12,7 @@ namespace Aero.Cake.Features.DotNet.Settings
         /// </summary>
         public static DotNetCoreTestSettings Default(string configuration = "Release", bool noBuild = false)
         {
-            //We default noBuild to false, because even though in the majority of our builds (web, workers, etc)
-            //we have a dedicated build task, that will only build the top level projects, not the test projects.
+            //If you build during the test, the dependent projects will be rebuilt and you will loose version info
 
             return new DotNetCoreTestSettings
             {

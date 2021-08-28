@@ -4,6 +4,7 @@ using Aero.Cake.Extensions;
 using Aero.Cake.Services;
 using Cake.Common;
 using Cake.Common.Diagnostics;
+using NuGet.Versioning;
 
 namespace Aero.Cake.Features.DotNet.Services
 {
@@ -74,7 +75,7 @@ namespace Aero.Cake.Features.DotNet.Services
 
             if(match.Groups.Count == 6 && !string.IsNullOrWhiteSpace(match.Groups[5].Value))
             {
-                versionSuffix = $"{match.Groups[5]}.{model.AssemblyVersion.Revision}+{model.AssemblyVersion.Revision}";
+                versionSuffix = $"{match.Groups[5]}.{model.AssemblyVersion.Revision}";
             }
 
             model.NuGetPackageVersion = $"{model.AssemblyVersion.Major}.{model.AssemblyVersion.Minor}.{model.AssemblyVersion.Build}{versionSuffix}";

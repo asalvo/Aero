@@ -11,9 +11,9 @@ namespace Aero.Cake.Features.DotNet.Settings
         /// Sets the following properties: Configuration, NoBuild, NoRestore,  MsBuildSettings (Uses MsBuildSettings.Default),
         ///   Additional Properties (Version, Copyright)
         /// </summary>
-        public static DotNetCorePackSettings Default(VersionModel versionModel, string companyName, string configuration = "Release", bool noBuild = true)
+        public static DotNetCorePackSettings Default(VersionModel versionModel, string companyName, string configuration = "Release", bool noBuild = false)
         {
-            //NoBuild is defaulted to true, because we should have built and restored already via the UnitTest task. 
+            //NoBuild is defaulted to false because we pack first, then unit test.
 
             var msBuildSettings = MsBuildSettings.Default(versionModel);
 

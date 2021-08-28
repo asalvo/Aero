@@ -40,8 +40,8 @@ namespace Aero.Cake.Features.DotNet.Services
         [Theory]
         [InlineData("1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3+4")]
         [InlineData("100.2000.30000.400000", "100.2000.30000.400000", "100.2000.30000.400000", "100.2000.30000.400000", "100.2000.30000+400000")] //big numbers
-        [InlineData("1.2.3.4-preview", "1.2.3.4", "1.2.3.4", "1.2.3.4-preview", "1.2.3-preview.4+4")]
-        [InlineData("1.2.3.4-anythingAllowed", "1.2.3.4", "1.2.3.4", "1.2.3.4-anythingAllowed", "1.2.3-anythingAllowed.4+4")]
+        [InlineData("1.2.3.4-preview", "1.2.3.4", "1.2.3.4", "1.2.3.4-preview", "1.2.3-preview.4")]
+        [InlineData("1.2.3.4-anythingAllowed", "1.2.3.4", "1.2.3.4", "1.2.3.4-anythingAllowed", "1.2.3-anythingAllowed.4")]
         public void ParseVersion_From_String_Parses_Correctly(string appVersion, string assemblyVersion, string fileVersion, string version, string nuGetPackageVersion)
         {
             //Act

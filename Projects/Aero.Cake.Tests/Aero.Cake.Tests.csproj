@@ -13,8 +13,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Extensions\**" />
     <Compile Remove="TestResults\**" />
+    <EmbeddedResource Remove="Extensions\**" />
     <EmbeddedResource Remove="TestResults\**" />
+    <None Remove="Extensions\**" />
     <None Remove="TestResults\**" />
   </ItemGroup>
 
@@ -46,10 +49,6 @@
     <None Update="Features\DotNet\Services\TestFiles\ProjectFileWith2Frameworks.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>
