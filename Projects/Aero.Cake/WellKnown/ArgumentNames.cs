@@ -8,7 +8,9 @@
         public static class NuGet
         {
             public static readonly string ApiKey = "NuGetApiKey";
+            public static readonly string Name = "NuGetName";
             public static readonly string Source = "NuGetSource";
+            public static readonly string Username = "NuGetUsername";
         }
     }
 }
