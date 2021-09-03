@@ -24,7 +24,7 @@ namespace Aero.Cake.Features.DotNet.Services
             var model = ServiceUnderTest.ParseAppVersion();
 
             //Assert
-            AssertVersionModel(model, "1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3+4");
+            AssertVersionModel(model, "1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3+4", "1.2.3");
         }
 
         [Fact]
@@ -38,20 +38,20 @@ namespace Aero.Cake.Features.DotNet.Services
         }
 
         [Theory]
-        [InlineData("1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3+4")]
-        [InlineData("100.2000.30000.400000", "100.2000.30000.400000", "100.2000.30000.400000", "100.2000.30000.400000", "100.2000.30000+400000")] //big numbers
-        [InlineData("1.2.3.4-preview", "1.2.3.4", "1.2.3.4", "1.2.3.4-preview", "1.2.3-preview.4")]
-        [InlineData("1.2.3.4-anythingAllowed", "1.2.3.4", "1.2.3.4", "1.2.3.4-anythingAllowed", "1.2.3-anythingAllowed.4")]
-        public void ParseVersion_From_String_Parses_Correctly(string appVersion, string assemblyVersion, string fileVersion, string version, string nuGetPackageVersion)
+        [InlineData("1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3+4", "1.2.3")]
+        [InlineData("100.2000.30000.400000", "100.2000.30000.400000", "100.2000.30000.400000", "100.2000.30000.400000", "100.2000.30000+400000", "100.2000.30000")] //big numbers
+        [InlineData("1.2.3.4-preview", "1.2.3.4", "1.2.3.4", "1.2.3.4-preview", "1.2.3-preview.4", "1.2.3-preview.4")]
+        [InlineData("1.2.3.4-anythingAllowed", "1.2.3.4", "1.2.3.4", "1.2.3.4-anythingAllowed", "1.2.3-anythingAllowed.4", "1.2.3-anythingAllowed.4")]
+        public void ParseVersion_From_String_Parses_Correctly(string appVersion, string assemblyVersion, string fileVersion, string version, string nuGetPackageVersion, string nuGetFileName)
         {
             //Act
             var model = ServiceUnderTest.ParseAppVersion(appVersion);
 
             //Assert
-            AssertVersionModel(model, assemblyVersion, fileVersion, version, nuGetPackageVersion);
+            AssertVersionModel(model, assemblyVersion, fileVersion, version, nuGetPackageVersion, nuGetFileName);
         }
 
-        private void AssertVersionModel(VersionModel model, string assemblyVersion, string fileVersion, string version, string nuGetPackageVersion)
+        private void AssertVersionModel(VersionModel model, string assemblyVersion, string fileVersion, string version, string nuGetPackageVersion, string nuGetFilename)
         {
             using (new AssertionScope())
             {
@@ -59,6 +59,7 @@ namespace Aero.Cake.Features.DotNet.Services
                 model.Version.Should().Be(version);
                 model.FileVersion.ToString().Should().Be(fileVersion);
                 model.NuGetPackageVersion.Should().Be(nuGetPackageVersion);
+                model.NuGetFileName.Should().Be(nuGetFilename);
             }
         }
     }

@@ -30,26 +30,26 @@ namespace Aero.Build.Tasks
             var settings = NuGetPushSettings.Default(nuGetApiPassword, nuGetSource);
             var versionModel = _versionService.ParseAppVersion();
 
-            PushAero(context, versionModel.NuGetPackageVersion, settings);
-            PushAeroCake(context, versionModel.NuGetPackageVersion, settings);
-            PushAeroCakeTestSupport(context, versionModel.NuGetPackageVersion, settings);
+            PushAero(context, versionModel, settings);
+            PushAeroCake(context, versionModel, settings);
+            PushAeroCakeTestSupport(context, versionModel, settings);
         }
 
-        private void PushAero(MyContext context, string nuGetPackageVersion, DotNetCoreNuGetPushSettings defaultSettings)
+        private void PushAero(MyContext context, VersionModel versionModel, DotNetCoreNuGetPushSettings defaultSettings)
         {
-            var path = new FilePath($"{context.ProjectsPath}/{Projects.Aero}/bin/{context.BuildConfiguration}/{Projects.Aero}.{nuGetPackageVersion}.nupkg");
+            var path = new FilePath($"{context.ProjectsPath}/{Projects.Aero}/bin/{context.BuildConfiguration}/{Projects.Aero}.{versionModel.NuGetFileName}.nupkg");
             _dotNetCore.NuGetPush(path.FullPath, defaultSettings);
         }
 
-        private void PushAeroCake(MyContext context, string nuGetPackageVersion, DotNetCoreNuGetPushSettings defaultSettings)
+        private void PushAeroCake(MyContext context, VersionModel versionModel, DotNetCoreNuGetPushSettings defaultSettings)
         {
-            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroCake}/bin/{context.BuildConfiguration}/{Projects.AeroCake}.{nuGetPackageVersion}.nupkg");
+            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroCake}/bin/{context.BuildConfiguration}/{Projects.AeroCake}.{versionModel.NuGetFileName}.nupkg");
             _dotNetCore.NuGetPush(path.FullPath, defaultSettings);
         }
 
-        private void PushAeroCakeTestSupport(MyContext context, string nuGetPackageVersion, DotNetCoreNuGetPushSettings defaultSettings)
+        private void PushAeroCakeTestSupport(MyContext context, VersionModel versionModel, DotNetCoreNuGetPushSettings defaultSettings)
         {
-            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroCakeTestSupport}/bin/{context.BuildConfiguration}/{Projects.AeroCakeTestSupport}.{nuGetPackageVersion}.nupkg");
+            var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroCakeTestSupport}/bin/{context.BuildConfiguration}/{Projects.AeroCakeTestSupport}.{versionModel.NuGetFileName}.nupkg");
             _dotNetCore.NuGetPush(path.FullPath, defaultSettings);
         }
     }

@@ -70,15 +70,17 @@ namespace Aero.Cake.Features.DotNet.Services
             //work for either 1.2.3.4 or 1.2.3.4-preview
             model.Version = appVersion;
 
-            //Default suffix
-            var versionSuffix = $"+{model.AssemblyVersion.Revision}";
-
             if(match.Groups.Count == 6 && !string.IsNullOrWhiteSpace(match.Groups[5].Value))
             {
-                versionSuffix = $"{match.Groups[5]}.{model.AssemblyVersion.Revision}";
+                var versionSuffix = $"{match.Groups[5]}.{model.AssemblyVersion.Revision}";
+                model.NuGetPackageVersion = $"{model.AssemblyVersion.Major}.{model.AssemblyVersion.Minor}.{model.AssemblyVersion.Build}{versionSuffix}";
+                model.NuGetFileName = model.NuGetPackageVersion;
             }
-
-            model.NuGetPackageVersion = $"{model.AssemblyVersion.Major}.{model.AssemblyVersion.Minor}.{model.AssemblyVersion.Build}{versionSuffix}";
+            else
+            {
+                model.NuGetPackageVersion = $"{model.AssemblyVersion.Major}.{model.AssemblyVersion.Minor}.{model.AssemblyVersion.Build}+{model.AssemblyVersion.Revision}";
+                model.NuGetFileName = $"{model.AssemblyVersion.Major}.{model.AssemblyVersion.Minor}.{model.AssemblyVersion.Build}";
+            }
 
             AeroContext.Information($"VersionService.ParseAppVersion. Action: Stop, AppVersion: {appVersion}, {model.ToLogString()}");
             return model;
@@ -111,6 +113,8 @@ namespace Aero.Cake.Features.DotNet.Services
         public Version FileVersion => AssemblyVersion;
 
         public string Version { get; set; }
+
+        public string NuGetFileName { get; set; }
 
         public string NuGetPackageVersion { get; set; }
 
