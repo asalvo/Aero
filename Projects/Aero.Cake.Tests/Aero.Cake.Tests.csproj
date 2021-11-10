@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0;netcoreapp3.1;</TargetFrameworks>
+
 
 	<FileVersion>1.0.0</FileVersion>
     <AssemblyVersion>1.0.0</AssemblyVersion>
@@ -10,6 +10,8 @@
     <IsPackable>false</IsPackable>
 
     <RootNamespace>Aero.Cake</RootNamespace>
+
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
