@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cake.Core;
 using Cake.Core.Configuration;
 using Cake.Core.Diagnostics;
@@ -55,21 +56,35 @@ namespace Aero.Cake.TestSupport
     {
         public CakeArguments()
         {
-            Arguments = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            Arguments = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
         }
 
-        private IDictionary<string, string> Arguments { get; }
+        private IDictionary<string, List<string>> Arguments { get; }
 
-        public void AddArgument(string key, string value) { Arguments.Add(key, value); }
+        public void AddArgument(string key, string value) { Arguments.Add(key, new List<string> { value }); }
 
+        public void AddArgument(string key, List<string> value) { Arguments.Add(key, value); }
+
+        /// <inheritdoc/>
         public bool HasArgument(string name)
         {
             return Arguments.ContainsKey(name);
         }
 
+        /// <inheritdoc/>
         public ICollection<string> GetArguments(string name)
         {
-            return Arguments.TryGetValue(name, out var arguments) ? new[] { arguments } : Array.Empty<string>();
+            Arguments.TryGetValue(name, out var arguments);
+            return arguments ?? (ICollection<string>)Array.Empty<string>();
+        }
+
+        /// <inheritdoc/>
+        public IDictionary<string, ICollection<string>> GetArguments()
+        {
+            var arguments = Arguments
+                .ToDictionary(x => x.Key, x => (ICollection<string>)x.Value.ToList());
+
+            return arguments;
         }
     }
 }
