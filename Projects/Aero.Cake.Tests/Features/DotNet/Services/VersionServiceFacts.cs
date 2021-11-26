@@ -24,7 +24,7 @@ namespace Aero.Cake.Features.DotNet.Services
             var model = ServiceUnderTest.ParseAppVersion();
 
             //Assert
-            AssertVersionModel(model, "1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3+4", "1.2.3");
+            AssertVersionModel(model, "1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3+4", "1.2.3.4");
         }
 
         [Fact]
