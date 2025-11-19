@@ -20,7 +20,8 @@
   <ItemGroup>
     <PackageReference Include="Cake.FileHelpers" />
     <PackageReference Include="Cake.Frosting" />
-    <PackageReference Include="dbup" />
+    <PackageReference Include="DbUp.Reboot.SqlServer" />
+    <PackageReference Include="Microsoft.Data.SqlClient" />
   </ItemGroup>
 
   <ItemGroup>

@@ -288,3 +288,4 @@ __pycache__/
 *.xsd.cs
 /.dotnet
 /tools
+/.claude/settings.local.json
