@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
 	<FileVersion>1.0.0</FileVersion>
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <Version>1.0.0</Version>
@@ -18,9 +18,9 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Cake.FileHelpers" Version="4.0.1" />
-    <PackageReference Include="Cake.Frosting" Version="1.3.0" />
-    <PackageReference Include="dbup" Version="4.5.0" />
+    <PackageReference Include="Cake.FileHelpers" />
+    <PackageReference Include="Cake.Frosting" />
+    <PackageReference Include="dbup" />
   </ItemGroup>
 
   <ItemGroup>
