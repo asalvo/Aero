@@ -8,7 +8,7 @@
     <Authors>Salvoz</Authors>
     <Description>Common Cake (Frosting) Test Support library for Aero projects</Description>
     <PackageProjectUrl>https://github.com/asalvo/Aero</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/asalvo/Aero/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/asalvo/Aero</RepositoryUrl>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
@@ -22,5 +22,13 @@
   <ItemGroup>
     <ProjectReference Include="..\Aero.Cake\Aero.Cake.csproj" />
   </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
 
 </Project>

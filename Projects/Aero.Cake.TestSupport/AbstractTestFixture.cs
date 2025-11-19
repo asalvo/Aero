@@ -29,7 +29,7 @@ namespace Aero.Cake.TestSupport
         {
             get
             {
-                var path = TestAssembly.CodeBase.Replace("file:///", string.Empty);
+                var path = TestAssembly.Location.Replace("file:///", string.Empty);
 
                 //Do not use Context.Environment here, as it's fake and might be set by the test to OSX when on Windows and vice-versa. 
                 if (Environment.OSVersion.Platform == PlatformID.Unix && !path.StartsWith('/'))

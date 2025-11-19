@@ -8,13 +8,16 @@ namespace Aero.Build
     {
         public override void Setup(MyContext context, ISetupContext info)
         {
-            context.Information("Setting things up...");
+            context.Information($"Lifetime.Setup. Action: Start, TargetTask: {info.TargetTask}");
+
             context.LifetimeInitialized();
+
+            context.Information("Lifetime.Setup. Action: Stop");
         }
 
         public override void Teardown(MyContext context, ITeardownContext info)
         {
-            context.Information("Tearing things down...");
+            context.Information("Lifetime.Teardown.  Action: Stop");
         }
     }
 }

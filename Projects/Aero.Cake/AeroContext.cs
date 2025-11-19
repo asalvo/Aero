@@ -1,4 +1,5 @@
-﻿using Cake.Core;
+﻿using Cake.Common.Diagnostics;
+using Cake.Core;
 using Cake.Core.IO;
 using Cake.Frosting;
 using System.IO;
@@ -7,6 +8,8 @@ namespace Aero.Cake
 {
     public interface IAeroContext : IFrostingContext
     {
+        string ProjectsPath { get; set; }
+
         IDirectory GetNormalizedDirectory(string relativePath);
         IFile GetNormalizedFile(string relativePath, bool throwIfNotExists = true);
         string GetNormalizedPath(string relativePath);
@@ -17,6 +20,8 @@ namespace Aero.Cake
         protected AeroContext(ICakeContext context) : base(context)
         {
         }
+
+        public string ProjectsPath { get; set; }
 
         public IFile GetNormalizedFile(string relativePath, bool throwIfNotExists = true)
         {
@@ -63,5 +68,22 @@ namespace Aero.Cake
         ///     return $"RepoRootFolder/projects/ProjectName/{relativePath}";
         /// </example>
         public abstract string GetNormalizedPath(string relativePath);
+
+        public void LifetimeInitialized()
+        {
+            //Working Directory changes between when MyContext.ctor is called and when this Lifetime class is run
+
+            this.Information($"MyContext.LifetimeInitialized. Action:Start, WorkingDirectory: {Environment.WorkingDirectory.FullPath.ToLowerInvariant()}");
+
+            LifetimeInitializedInternal();
+
+            //Usually we are setting ProjectsPath, so we'll log that out now
+            this.Information($"MyContext.LifetimeInitialized. Action: Stop, ProjectsPath: {ProjectsPath}, WorkingDirectory: {Environment.WorkingDirectory.FullPath.ToLowerInvariant()}");
+        }
+
+        protected virtual void LifetimeInitializedInternal()
+        {
+
+        }
     }
 }

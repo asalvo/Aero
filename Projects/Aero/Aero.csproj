@@ -11,9 +11,17 @@
 	  <Authors>Salvoz</Authors>
 	  <Description>A collection of common classes and functionality, part of the Aero project</Description>
 	  <PackageProjectUrl>https://github.com/asalvo/Aero</PackageProjectUrl>
-	  <PackageLicenseUrl>https://github.com/asalvo/Aero/blob/master/LICENSE</PackageLicenseUrl>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	  <RepositoryUrl>https://github.com/asalvo/Aero</RepositoryUrl>
 	  <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
 </Project>

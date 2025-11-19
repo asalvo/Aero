@@ -12,12 +12,11 @@ namespace Aero.Cake.Features.DotNet.Settings
         /// </summary>
         public static DotNetTestSettings Default(string configuration = "Release", bool noBuild = false)
         {
-            //If you build during the test, the dependent projects will be rebuilt and you will loose version info
+            //If you build during the test, the dependent projects will be rebuilt and you will lose version info
 
             return new DotNetTestSettings
             {
                 Configuration = configuration,
-                Loggers = new[] { "trx" },
                 NoBuild = noBuild,
                 NoRestore = noBuild
             };
@@ -27,6 +26,12 @@ namespace Aero.Cake.Features.DotNet.Settings
         {
             settings.NoBuild = noBuild;
             settings.NoRestore = noBuild;
+            return settings;
+        }
+
+        public static DotNetTestSettings SetPathType(this DotNetTestSettings settings, DotNetTestPathType pathType)
+        {
+            settings.PathType = pathType;
             return settings;
         }
     }
