@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentAssertions;
+using Shouldly;
 using Xunit;
 
 namespace Aero.Cake.Features.DotNet.Settings
@@ -17,12 +17,10 @@ namespace Aero.Cake.Features.DotNet.Settings
             var msBuildSettings = MsBuildSettings.Default(versionModel);
 
             //Assert
-            msBuildSettings.Properties.Should().BeEquivalentTo(new Dictionary<string, ICollection<string>>()
-                {
-                    {"Version", new List<string>{ "1.2.3.4" } },
-                    {"AssemblyVersion", new List<string>{ "1.2.3.4" } },
-                    {"FileVersion", new List<string>{ "1.2.3.4" } }
-                });
+            msBuildSettings.Properties.Count.ShouldBe(3);
+            msBuildSettings.Properties["Version"].ShouldBe(new List<string>{ "1.2.3.4" });
+            msBuildSettings.Properties["AssemblyVersion"].ShouldBe(new List<string>{ "1.2.3.4" });
+            msBuildSettings.Properties["FileVersion"].ShouldBe(new List<string>{ "1.2.3.4" });
         }
     }
 }

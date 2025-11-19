@@ -1,8 +1,7 @@
 ﻿using System;
 using Aero.Cake.Services;
 using Aero.Cake.WellKnown;
-using FluentAssertions;
-using FluentAssertions.Execution;
+using Shouldly;
 using Xunit;
 
 namespace Aero.Cake.Features.DotNet.Services
@@ -34,7 +33,7 @@ namespace Aero.Cake.Features.DotNet.Services
             var exception = Assert.Throws<Exception>(() => ServiceUnderTest.ParseAppVersion());
 
             //Assert
-            exception.Message.Should().Be("AppVersion argument missing");
+            exception.Message.ShouldBe("AppVersion argument missing");
         }
 
         [Theory]
@@ -53,14 +52,11 @@ namespace Aero.Cake.Features.DotNet.Services
 
         private void AssertVersionModel(VersionModel model, string assemblyVersion, string fileVersion, string version, string nuGetPackageVersion, string nuGetFilename)
         {
-            using (new AssertionScope())
-            {
-                model.AssemblyVersion.ToString().Should().Be(assemblyVersion);
-                model.Version.Should().Be(version);
-                model.FileVersion.ToString().Should().Be(fileVersion);
-                model.NuGetPackageVersion.Should().Be(nuGetPackageVersion);
-                model.NuGetFileName.Should().Be(nuGetFilename);
-            }
+            model.AssemblyVersion.ToString().ShouldBe(assemblyVersion);
+            model.Version.ShouldBe(version);
+            model.FileVersion.ToString().ShouldBe(fileVersion);
+            model.NuGetPackageVersion.ShouldBe(nuGetPackageVersion);
+            model.NuGetFileName.ShouldBe(nuGetFilename);
         }
     }
 }

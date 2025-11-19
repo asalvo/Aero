@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using Shouldly;
 using Xunit;
 
 namespace Aero.Common
@@ -10,7 +11,7 @@ namespace Aero.Common
         {
             var guid1 = CombGuid.GenerateComb();
 
-            guid1.Should().NotBeEmpty();
+            guid1.ShouldNotBe(Guid.Empty);
 
             //for (int i = 0; i < 100; i++)
             //{

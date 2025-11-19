@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentAssertions;
+using Shouldly;
 using Xunit;
 
 namespace Aero.Cake.Features.DotNet.Settings
@@ -17,19 +17,17 @@ namespace Aero.Cake.Features.DotNet.Settings
             var packSettings = PackSettings.Default(versionModel, "SomeCompany", "someConfiguration", false);
 
             //Assert
-            packSettings.Configuration.Should().Be("someConfiguration");
-            packSettings.NoBuild.Should().BeFalse();
-            packSettings.NoRestore.Should().BeFalse();
+            packSettings.Configuration.ShouldBe("someConfiguration");
+            packSettings.NoBuild.ShouldBeFalse();
+            packSettings.NoRestore.ShouldBeFalse();
 
             var customPackSettings = packSettings.ArgumentCustomization(new global::Cake.Core.IO.ProcessArgumentBuilder());
-            customPackSettings.Render().Should().Be($"/p:Version=1.2.3+4 /p:Copyright=\"Copyright {DateTime.UtcNow.Year} SomeCompany\"");
+            customPackSettings.Render().ShouldBe($"/p:Version=1.2.3+4 /p:Copyright=\"Copyright {DateTime.UtcNow.Year} SomeCompany\"");
 
-            packSettings.MSBuildSettings.Properties.Should().BeEquivalentTo(new Dictionary<string, ICollection<string>>()
-                {
-                    {"Version", new List<string>{ "1.2.3.4" } },
-                    {"AssemblyVersion", new List<string>{ "1.2.3.4" } },
-                    {"FileVersion", new List<string>{ "1.2.3.4" } }
-                });
+            packSettings.MSBuildSettings.Properties.Count.ShouldBe(3);
+            packSettings.MSBuildSettings.Properties["Version"].ShouldBe(new List<string>{ "1.2.3.4" });
+            packSettings.MSBuildSettings.Properties["AssemblyVersion"].ShouldBe(new List<string>{ "1.2.3.4" });
+            packSettings.MSBuildSettings.Properties["FileVersion"].ShouldBe(new List<string>{ "1.2.3.4" });
         }
     }
 }

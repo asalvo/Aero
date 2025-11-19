@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(dotnet restore:*)"
+      "Bash(dotnet restore:*)",
+      "WebFetch(domain:xunit.net)",
+      "Bash(dotnet package search:*)",
+      "Bash(dotnet test:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,7 +1,7 @@
 ﻿using Aero.Cake.Services;
 using Aero.Cake.Wrappers;
 using Cake.Testing;
-using FluentAssertions;
+using Shouldly;
 using Xunit;
 
 namespace Aero.Cake.Features.DotNet.Services
@@ -30,7 +30,7 @@ namespace Aero.Cake.Features.DotNet.Services
             var models = ServiceUnderTest.GetProjectModels("SomeProject", "Projects", "Release");
 
             //Assert
-            models.Should().BeEquivalentTo(new ProjectModel[]
+            models.ShouldBeEquivalentTo(new ProjectModel[]
             {
                 new ProjectModel
                 {
@@ -55,7 +55,7 @@ namespace Aero.Cake.Features.DotNet.Services
             var targetFrameworks = ServiceUnderTest.GetTargetFrameworks("project.csproj");
 
             //Assert
-            targetFrameworks.Should().BeEquivalentTo(expectedFrameworks.Split(";"));
+            targetFrameworks.ShouldBeEquivalentTo(expectedFrameworks.Split(";"));
         }
     }
 }

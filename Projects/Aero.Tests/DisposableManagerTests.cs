@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using FluentAssertions;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
+using Shouldly;
 using Xunit;
 
 namespace Aero.Common
@@ -24,7 +24,7 @@ namespace Aero.Common
             //Assert
             disposable1.Received(1).Dispose();
             disposable2.Received(1).Dispose();
-            disposable1.Should().Be(disposable2);
+            disposable1.ShouldBe(disposable2);
         }
 
         [Fact]

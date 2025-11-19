@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+﻿using Shouldly;
 using Xunit;
 
 namespace Aero.Common
@@ -16,7 +16,7 @@ namespace Aero.Common
         public void ValidatePasswordTest()
         {
             //Assert
-            _serviceUnderTest.ValidatePassword("Test", "10000:HqulkQiYvrVO9ID6q8cZ6enTK0DbSB0n:VLqrhB/imGJzd1g5Fx3p7i5Vkno=").Should().BeTrue();
+            _serviceUnderTest.ValidatePassword("Test", "10000:HqulkQiYvrVO9ID6q8cZ6enTK0DbSB0n:VLqrhB/imGJzd1g5Fx3p7i5Vkno=").ShouldBeTrue();
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace Aero.Common
             var hash = _serviceUnderTest.HashPassword(password);
 
             //Assert
-            _serviceUnderTest.ValidatePassword(password, hash).Should().BeTrue();
+            _serviceUnderTest.ValidatePassword(password, hash).ShouldBeTrue();
         }
 
 
