@@ -1,6 +1,6 @@
 ﻿using System;
 using Aero.Cake.Features.DotNet.Services;
-using Cake.Common.Tools.DotNetCore.Pack;
+using Cake.Common.Tools.DotNet.Pack;
 using Cake.Core;
 
 namespace Aero.Cake.Features.DotNet.Settings
@@ -11,13 +11,13 @@ namespace Aero.Cake.Features.DotNet.Settings
         /// Sets the following properties: Configuration, NoBuild, NoRestore,  MsBuildSettings (Uses MsBuildSettings.Default),
         ///   Additional Properties (Version, Copyright)
         /// </summary>
-        public static DotNetCorePackSettings Default(VersionModel versionModel, string companyName, string configuration = "Release", bool noBuild = false)
+        public static DotNetPackSettings Default(VersionModel versionModel, string companyName, string configuration = "Release", bool noBuild = false)
         {
             //NoBuild is defaulted to false because we pack first, then unit test.
 
             var msBuildSettings = MsBuildSettings.Default(versionModel);
 
-            return new DotNetCorePackSettings
+            return new DotNetPackSettings
             {
                 Configuration = configuration,
                 NoBuild = noBuild,

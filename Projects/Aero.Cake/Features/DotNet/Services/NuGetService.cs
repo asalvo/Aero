@@ -1,13 +1,13 @@
 ﻿using Aero.Cake.Features.DotNet.Wrappers;
 using Aero.Cake.Services;
 using Cake.Common.Diagnostics;
-using Cake.Common.Tools.DotNetCore.NuGet.Source;
+using Cake.Common.Tools.DotNet.NuGet.Source;
 
 namespace Aero.Cake.Features.DotNet.Services
 {
     public interface INuGetService
     {
-        void AddOrUpdateNuGetSource(string name, DotNetCoreNuGetSourceSettings settings);
+        void AddOrUpdateNuGetSource(string name, DotNetNuGetSourceSettings settings);
     }
 
     public class NuGetService : AbstractService, INuGetService
@@ -19,7 +19,7 @@ namespace Aero.Cake.Features.DotNet.Services
             _dotNet = dotNet;
         }
 
-        public void AddOrUpdateNuGetSource(string name, DotNetCoreNuGetSourceSettings settings)
+        public void AddOrUpdateNuGetSource(string name, DotNetNuGetSourceSettings settings)
         {
             var logPrefix = $"{nameof(NuGetService)}.{nameof(AddOrUpdateNuGetSource)}";
 

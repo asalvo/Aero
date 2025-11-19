@@ -5,7 +5,7 @@ using Aero.Cake.Features.DotNet.Settings;
 using Aero.Cake.Features.DotNet.Wrappers;
 using Aero.Cake.WellKnown;
 using Cake.Common;
-using Cake.Common.Tools.DotNetCore.NuGet.Push;
+using Cake.Common.Tools.DotNet.NuGet.Push;
 using Cake.Core.IO;
 using Cake.Frosting;
 
@@ -35,19 +35,19 @@ namespace Aero.Build.Tasks
             PushAeroCakeTestSupport(context, versionModel, settings);
         }
 
-        private void PushAero(MyContext context, VersionModel versionModel, DotNetCoreNuGetPushSettings defaultSettings)
+        private void PushAero(MyContext context, VersionModel versionModel, DotNetNuGetPushSettings defaultSettings)
         {
             var path = new FilePath($"{context.ProjectsPath}/{Projects.Aero}/bin/{context.BuildConfiguration}/{Projects.Aero}.{versionModel.NuGetFileName}.nupkg");
             _dotNetCore.NuGetPush(path.FullPath, defaultSettings);
         }
 
-        private void PushAeroCake(MyContext context, VersionModel versionModel, DotNetCoreNuGetPushSettings defaultSettings)
+        private void PushAeroCake(MyContext context, VersionModel versionModel, DotNetNuGetPushSettings defaultSettings)
         {
             var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroCake}/bin/{context.BuildConfiguration}/{Projects.AeroCake}.{versionModel.NuGetFileName}.nupkg");
             _dotNetCore.NuGetPush(path.FullPath, defaultSettings);
         }
 
-        private void PushAeroCakeTestSupport(MyContext context, VersionModel versionModel, DotNetCoreNuGetPushSettings defaultSettings)
+        private void PushAeroCakeTestSupport(MyContext context, VersionModel versionModel, DotNetNuGetPushSettings defaultSettings)
         {
             var path = new FilePath($"{context.ProjectsPath}/{Projects.AeroCakeTestSupport}/bin/{context.BuildConfiguration}/{Projects.AeroCakeTestSupport}.{versionModel.NuGetFileName}.nupkg");
             _dotNetCore.NuGetPush(path.FullPath, defaultSettings);

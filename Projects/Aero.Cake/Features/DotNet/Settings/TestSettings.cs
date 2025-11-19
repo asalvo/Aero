@@ -1,4 +1,4 @@
-﻿using Cake.Common.Tools.DotNetCore.Test;
+﻿using Cake.Common.Tools.DotNet.Test;
 
 namespace Aero.Cake.Features.DotNet.Settings
 {
@@ -10,11 +10,11 @@ namespace Aero.Cake.Features.DotNet.Settings
         ///   - NoBuild
         ///   - NoRestore
         /// </summary>
-        public static DotNetCoreTestSettings Default(string configuration = "Release", bool noBuild = false)
+        public static DotNetTestSettings Default(string configuration = "Release", bool noBuild = false)
         {
             //If you build during the test, the dependent projects will be rebuilt and you will loose version info
 
-            return new DotNetCoreTestSettings
+            return new DotNetTestSettings
             {
                 Configuration = configuration,
                 Loggers = new[] { "trx" },
@@ -23,7 +23,7 @@ namespace Aero.Cake.Features.DotNet.Settings
             };
         }
 
-        public static DotNetCoreTestSettings SetNoBuildNoRestore(this DotNetCoreTestSettings settings, bool noBuild)
+        public static DotNetTestSettings SetNoBuildNoRestore(this DotNetTestSettings settings, bool noBuild)
         {
             settings.NoBuild = noBuild;
             settings.NoRestore = noBuild;

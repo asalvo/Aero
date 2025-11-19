@@ -1,5 +1,5 @@
 ﻿using Aero.Cake.Features.DotNet.Services;
-using Cake.Common.Tools.DotNetCore.Build;
+using Cake.Common.Tools.DotNet.Build;
 
 namespace Aero.Cake.Features.DotNet.Settings
 {
@@ -9,11 +9,11 @@ namespace Aero.Cake.Features.DotNet.Settings
         /// Sets the following properties: Configuration, MsBuildSettings (Uses MsBuildSettings.Default),
         ///   Additional Properties (Version, Copyright)
         /// </summary>
-        public static DotNetCoreBuildSettings Default(VersionModel versionModel, string configuration = "Release")
+        public static DotNetBuildSettings Default(VersionModel versionModel, string configuration = "Release")
         {
             var msBuildSettings = MsBuildSettings.Default(versionModel);
 
-            return new DotNetCoreBuildSettings
+            return new DotNetBuildSettings
             {
                 Configuration = configuration,
                 MSBuildSettings = msBuildSettings,

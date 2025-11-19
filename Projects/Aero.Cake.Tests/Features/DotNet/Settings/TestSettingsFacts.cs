@@ -1,4 +1,4 @@
-﻿using Cake.Common.Tools.DotNetCore.Test;
+﻿using Cake.Common.Tools.DotNet.Test;
 using Shouldly;
 using Xunit;
 
@@ -22,7 +22,7 @@ namespace Aero.Cake.Features.DotNet.Settings
         public void SetNoBuildNoRestore_Sets_NoBuild_And_NoRestore_To_Specified_Value()
         {
             //Arrange
-            var testSettings = new DotNetCoreTestSettings();
+            var testSettings = new DotNetTestSettings();
 
             //Pre-Assert
             testSettings.NoBuild.ShouldBeFalse();

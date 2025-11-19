@@ -1,5 +1,5 @@
 ﻿using Aero.Cake.Features.DotNet.Services;
-using Cake.Common.Tools.DotNetCore.MSBuild;
+using Cake.Common.Tools.DotNet.MSBuild;
 
 namespace Aero.Cake.Features.DotNet.Settings
 {
@@ -8,9 +8,9 @@ namespace Aero.Cake.Features.DotNet.Settings
         /// <summary>
         /// Sets the following properties: Additional Properties (Version, AssemblyVersion, FileVersion)
         /// </summary>
-        public static DotNetCoreMSBuildSettings Default(VersionModel versionModel)
+        public static DotNetMSBuildSettings Default(VersionModel versionModel)
         {
-            return new DotNetCoreMSBuildSettings()
+            return new DotNetMSBuildSettings()
                 .WithProperty("Version", versionModel.Version)
                 .WithProperty("AssemblyVersion", versionModel.AssemblyVersion.ToString())
                 .WithProperty("FileVersion", versionModel.FileVersion.ToString());

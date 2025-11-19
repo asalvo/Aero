@@ -6,7 +6,7 @@ namespace Aero.Build
 {
     public sealed class Lifetime : FrostingLifetime<MyContext>
     {
-        public override void Setup(MyContext context)
+        public override void Setup(MyContext context, ISetupContext info)
         {
             context.Information("Setting things up...");
             context.LifetimeInitialized();
