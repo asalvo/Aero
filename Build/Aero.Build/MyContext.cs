@@ -14,15 +14,13 @@ namespace Aero.Build
             BuildConfiguration = context.Argument(ArgumentNames.BuildConfiguration, "Release");
         }
 
-        public void LifetimeInitialized()
+        protected override void LifetimeInitializedInternal()
         {
             //Working Directory changes between when MyContext.ctor is called and when this Lifetime class is run
             ProjectsPath = GetNormalizedPath(string.Empty);
         }
 
         public string BuildConfiguration { get; set; }
-
-        public string ProjectsPath { get; set; }
 
         public override string GetNormalizedPath(string relativePath)
         {

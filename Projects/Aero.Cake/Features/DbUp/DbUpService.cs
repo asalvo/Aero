@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.Reflection;
 using Aero.Cake.Services;
 using Cake.Common.Diagnostics;
 using Cake.Core;
 using Cake.Core.Diagnostics;
-using DbUp;
-using DbUp.Engine.Output;
+using DbUp.Reboot;
+using DbUp.Reboot.Engine.Output;
+using Microsoft.Data.SqlClient;
 
 namespace Aero.Cake.Features.DbUp
 {
@@ -29,16 +29,14 @@ namespace Aero.Cake.Features.DbUp
             var usernameAudit = string.IsNullOrWhiteSpace(username) ? "IntegratedAuth" : username;
             AeroContext.Information($"Server: {csb.DataSource}, Database: {csb.InitialCatalog}, Username: {usernameAudit}");
 
-            var useAzureSecurity = false;
             if (!string.IsNullOrWhiteSpace(tenantId))
             {
                 //https://docs.microsoft.com/en-us/azure/key-vault/service-to-service-authentication#running-the-application-using-managed-identity
-                useAzureSecurity = true;
                 Environment.SetEnvironmentVariable("AzureServicesAuthConnectionString", $"RunAs=App;AppId={username};TenantId={tenantId};AppKey={password}");
             }
 
             var upgrade = DeployChanges.To
-                .SqlDatabase(connectionString, null, useAzureSecurity)
+                .SqlDatabase(connectionString)
                 .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
                 .LogTo(new CakeDbUpLogger(AeroContext))
                 .Build();

@@ -74,16 +74,15 @@ namespace Aero.Cake.Features.DotNet.Services
             {
                 var versionSuffix = $"{match.Groups[5]}.{model.AssemblyVersion.Revision}";
                 model.NuGetPackageVersion = $"{model.AssemblyVersion.Major}.{model.AssemblyVersion.Minor}.{model.AssemblyVersion.Build}{versionSuffix}";
-                //model.NuGetFileName = model.NuGetPackageVersion;
+                // .NET 10: For prerelease versions, filename matches NuGetPackageVersion (e.g., 1.2.3-preview.4)
+                model.NuGetFileName = model.NuGetPackageVersion;
             }
             else
             {
                 model.NuGetPackageVersion = $"{model.AssemblyVersion.Major}.{model.AssemblyVersion.Minor}.{model.AssemblyVersion.Build}+{model.AssemblyVersion.Revision}";
-                //model.NuGetFileName = $"{model.AssemblyVersion.Major}.{model.AssemblyVersion.Minor}.{model.AssemblyVersion.Build}";
+                // .NET 10: For non-prerelease versions, filename is major.minor.build only (revision stripped)
+                model.NuGetFileName = $"{model.AssemblyVersion.Major}.{model.AssemblyVersion.Minor}.{model.AssemblyVersion.Build}";
             }
-
-            //With the release of one of the following, the fileName changed: .Net 6, VS2022, MSBUild 2022
-            model.NuGetFileName = appVersion;
 
             AeroContext.Information($"VersionService.ParseAppVersion. Action: Stop, AppVersion: {appVersion}, {model.ToLogString()}");
             return model;

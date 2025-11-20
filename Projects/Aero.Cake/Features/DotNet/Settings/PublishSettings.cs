@@ -1,5 +1,5 @@
 ﻿using Aero.Cake.Features.DotNet.Services;
-using Cake.Common.Tools.DotNetCore.Publish;
+using Cake.Common.Tools.DotNet.Publish;
 
 namespace Aero.Cake.Features.DotNet.Settings
 {
@@ -13,11 +13,11 @@ namespace Aero.Cake.Features.DotNet.Settings
         /// <remarks>
         /// - It is assumed that publish is called from a Build Task in which build was not called first, so NoBuild is set to false by default.
         /// </remarks>
-        public static DotNetCorePublishSettings Default(VersionModel versionModel, string configuration = "Release", bool noBuild = false)
+        public static DotNetPublishSettings Default(VersionModel versionModel, string configuration = "Release", bool noBuild = false)
         {
             var msBuildSettings = MsBuildSettings.Default(versionModel);
 
-            return new DotNetCorePublishSettings
+            return new DotNetPublishSettings
             {
                 Configuration = configuration,
                 MSBuildSettings = msBuildSettings,

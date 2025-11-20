@@ -1,8 +1,7 @@
 ﻿using System;
 using Aero.Cake.Services;
 using Aero.Cake.WellKnown;
-using FluentAssertions;
-using FluentAssertions.Execution;
+using Shouldly;
 using Xunit;
 
 namespace Aero.Cake.Features.DotNet.Services
@@ -24,7 +23,7 @@ namespace Aero.Cake.Features.DotNet.Services
             var model = ServiceUnderTest.ParseAppVersion();
 
             //Assert
-            AssertVersionModel(model, "1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3+4", "1.2.3.4");
+            AssertVersionModel(model, "1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3+4", "1.2.3"); // .NET 10: revision stripped
         }
 
         [Fact]
@@ -34,14 +33,15 @@ namespace Aero.Cake.Features.DotNet.Services
             var exception = Assert.Throws<Exception>(() => ServiceUnderTest.ParseAppVersion());
 
             //Assert
-            exception.Message.Should().Be("AppVersion argument missing");
+            exception.Message.ShouldBe("AppVersion argument missing");
         }
 
         [Theory]
-        [InlineData("1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3+4", "1.2.3.4")]
-        [InlineData("100.2000.30000.400000", "100.2000.30000.400000", "100.2000.30000.400000", "100.2000.30000.400000", "100.2000.30000+400000", "100.2000.30000.400000")] //big numbers
-        [InlineData("1.2.3.4-preview", "1.2.3.4", "1.2.3.4", "1.2.3.4-preview", "1.2.3-preview.4", "1.2.3.4-preview")]
-        [InlineData("1.2.3.4-anythingAllowed", "1.2.3.4", "1.2.3.4", "1.2.3.4-anythingAllowed", "1.2.3-anythingAllowed.4", "1.2.3.4-anythingAllowed")]
+        [InlineData("1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3.4", "1.2.3+4", "1.2.3")] // .NET 10: revision stripped from filename
+        [InlineData("1.0.1.0", "1.0.1.0", "1.0.1.0", "1.0.1.0", "1.0.1+0", "1.0.1")] // .NET 10: trailing .0 stripped
+        [InlineData("1.2.3.4-preview", "1.2.3.4", "1.2.3.4", "1.2.3.4-preview", "1.2.3-preview.4", "1.2.3-preview.4")] // .NET 10: build number after prerelease tag
+        [InlineData("1.2.3.4-anythingAllowed", "1.2.3.4", "1.2.3.4", "1.2.3.4-anythingAllowed", "1.2.3-anythingAllowed.4", "1.2.3-anythingAllowed.4")] // .NET 10: build number after prerelease tag
+        [InlineData("4.0.0.7-preview", "4.0.0.7", "4.0.0.7", "4.0.0.7-preview", "4.0.0-preview.7", "4.0.0-preview.7")] // .NET 10: additional prerelease test
         public void ParseVersion_From_String_Parses_Correctly(string appVersion, string assemblyVersion, string fileVersion, string version, string nuGetPackageVersion, string nuGetFileName)
         {
             //Act
@@ -53,14 +53,11 @@ namespace Aero.Cake.Features.DotNet.Services
 
         private void AssertVersionModel(VersionModel model, string assemblyVersion, string fileVersion, string version, string nuGetPackageVersion, string nuGetFilename)
         {
-            using (new AssertionScope())
-            {
-                model.AssemblyVersion.ToString().Should().Be(assemblyVersion);
-                model.Version.Should().Be(version);
-                model.FileVersion.ToString().Should().Be(fileVersion);
-                model.NuGetPackageVersion.Should().Be(nuGetPackageVersion);
-                model.NuGetFileName.Should().Be(nuGetFilename);
-            }
+            model.AssemblyVersion.ToString().ShouldBe(assemblyVersion);
+            model.Version.ShouldBe(version);
+            model.FileVersion.ToString().ShouldBe(fileVersion);
+            model.NuGetPackageVersion.ShouldBe(nuGetPackageVersion);
+            model.NuGetFileName.ShouldBe(nuGetFilename);
         }
     }
 }

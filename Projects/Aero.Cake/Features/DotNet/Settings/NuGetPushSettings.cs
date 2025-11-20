@@ -1,12 +1,12 @@
-﻿using Cake.Common.Tools.DotNetCore.NuGet.Push;
+﻿using Cake.Common.Tools.DotNet.NuGet.Push;
 
 namespace Aero.Cake.Features.DotNet.Settings
 {
     public static class NuGetPushSettings
     {
-        public static DotNetCoreNuGetPushSettings Default(string apiKey, string apiUrl)
+        public static DotNetNuGetPushSettings Default(string apiKey, string apiUrl)
         {
-            return new DotNetCoreNuGetPushSettings()
+            return new DotNetNuGetPushSettings()
             {
                 ApiKey = apiKey,
                 Source = apiUrl

@@ -1,5 +1,5 @@
-﻿using Cake.Common.Tools.DotNetCore.Test;
-using FluentAssertions;
+﻿using Cake.Common.Tools.DotNet.Test;
+using Shouldly;
 using Xunit;
 
 namespace Aero.Cake.Features.DotNet.Settings
@@ -13,27 +13,27 @@ namespace Aero.Cake.Features.DotNet.Settings
             var testSettings = TestSettings.Default("someConfiguration", false);
 
             //Assert
-            testSettings.Configuration.Should().Be("someConfiguration");
-            testSettings.NoBuild.Should().BeFalse();
-            testSettings.NoRestore.Should().BeFalse();
+            testSettings.Configuration.ShouldBe("someConfiguration");
+            testSettings.NoBuild.ShouldBeFalse();
+            testSettings.NoRestore.ShouldBeFalse();
         }
 
         [Fact]
         public void SetNoBuildNoRestore_Sets_NoBuild_And_NoRestore_To_Specified_Value()
         {
             //Arrange
-            var testSettings = new DotNetCoreTestSettings();
+            var testSettings = new DotNetTestSettings();
 
             //Pre-Assert
-            testSettings.NoBuild.Should().BeFalse();
-            testSettings.NoRestore.Should().BeFalse();
+            testSettings.NoBuild.ShouldBeFalse();
+            testSettings.NoRestore.ShouldBeFalse();
 
             //Act
             testSettings.SetNoBuildNoRestore(true);
 
             //Assert
-            testSettings.NoBuild.Should().BeTrue();
-            testSettings.NoRestore.Should().BeTrue();
+            testSettings.NoBuild.ShouldBeTrue();
+            testSettings.NoRestore.ShouldBeTrue();
         }
     }
 }

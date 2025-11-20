@@ -1,12 +1,12 @@
-﻿using Cake.Common.Tools.DotNetCore.NuGet.Source;
+﻿using Cake.Common.Tools.DotNet.NuGet.Source;
 
 namespace Aero.Cake.Features.DotNet.Settings
 {
     public static class NuGetSourceSettings
     {
-        public static DotNetCoreNuGetSourceSettings Default(string apiKey, string apiUrl, string apiUsername = "UsingPAT")
+        public static DotNetNuGetSourceSettings Default(string apiKey, string apiUrl, string apiUsername = "UsingPAT")
         {
-            return new DotNetCoreNuGetSourceSettings()
+            return new DotNetNuGetSourceSettings()
             {
                 Password = apiKey,
                 Source = apiUrl,

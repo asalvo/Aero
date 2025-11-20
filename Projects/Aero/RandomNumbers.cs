@@ -14,7 +14,7 @@ namespace Aero
 
         public RandomNumbers()
         {
-            _random = new RNGCryptoServiceProvider();
+            _random = RandomNumberGenerator.Create();
         }
 
         public int GetRandomNumber(int minValue, int maxValue)

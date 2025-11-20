@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using Aero.Infrastructure;
-using FluentAssertions;
+using Shouldly;
 using Xunit;
 
 namespace Aero.Common
@@ -59,7 +59,7 @@ namespace Aero.Common
             var s = fs.GetSpecialFolder(SpecialFolder.LocalApplicationData);
 
             //Assert
-            s.Should().Be(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
+            s.ShouldBe(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace Aero.Common
             var s = fs.GetSpecialFolder(SpecialFolder.ProgramData);
 
             //Assert
-            s.Should().Be(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData));
+            s.ShouldBe(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData));
         }
 
 
@@ -86,7 +86,7 @@ namespace Aero.Common
             var d = fs.GetFullPath(@"C:\temp", "Test.txt");
 
             //Assert
-            d.Should().Be(@"C:\temp\Test.txt");
+            d.ShouldBe(@"C:\temp\Test.txt");
         }
 
         [Fact]
@@ -100,7 +100,7 @@ namespace Aero.Common
             var d = fs.GetFullPath(@"test", "Test.txt", specialFolder: SpecialFolder.LocalApplicationData);
 
             //Assert
-            d.Should().Be(Path.Combine(appDir, "test", "Test.txt"));
+            d.ShouldBe(Path.Combine(appDir, "test", "Test.txt"));
         }
 
         [Fact]
@@ -108,7 +108,7 @@ namespace Aero.Common
         {
 
             //Pre-Assert
-            _testDirectory.GetDirectories().Count().Should().Be(0);
+            _testDirectory.GetDirectories().Count().ShouldBe(0);
 
             //Arrange
             var fs = new FileSystem();
@@ -119,8 +119,8 @@ namespace Aero.Common
             //Assert
             var subDirs = _testDirectory.GetDirectories();
 
-            subDirs.Count().Should().Be(1);
-            subDirs.Single(di => di.FullName == Path.Combine(_testDirectory.FullName, "NewDirectory")).Should().NotBeNull();
+            subDirs.Count().ShouldBe(1);
+            subDirs.Single(di => di.FullName == Path.Combine(_testDirectory.FullName, "NewDirectory")).ShouldNotBeNull();
         }
 
         [Fact]
@@ -129,7 +129,7 @@ namespace Aero.Common
 
             //Pre-Assert
             var now = DateTime.UtcNow;
-            _testDirectory.GetDirectories().Count().Should().Be(0);
+            _testDirectory.GetDirectories().Count().ShouldBe(0);
 
             //Arrange
             var newDirectoryName = Path.Combine(_testDirectory.FullName, "NewDirectory");
@@ -140,15 +140,15 @@ namespace Aero.Common
 
             //Assert
             var subDirs = _testDirectory.GetDirectories();
-            subDirs.Count().Should().Be(1);
-            subDirs.Single(di => di.FullName == newDirectoryName).CreationTimeUtc.Should().BeCloseTo(now, TimeSpan.FromSeconds(2));
+            subDirs.Count().ShouldBe(1);
+            subDirs.Single(di => di.FullName == newDirectoryName).CreationTimeUtc.ShouldBe(now, TimeSpan.FromSeconds(2));
         }
 
         [Fact]
         public void CreateDirectory_When_Directory_Exists_Then_Do_Nothing()
         {
             //Pre-Assert
-            _testDirectory.GetDirectories().Length.Should().Be(0);
+            _testDirectory.GetDirectories().Length.ShouldBe(0);
 
             //Arrange
             var newDirectoryName = Path.Combine(_testDirectory.FullName, "NewDirectory");
@@ -156,7 +156,7 @@ namespace Aero.Common
             fs.CreateDirectory(newDirectoryName); //Create directory so it is pre-existing
 
             //Pre-Assert
-            _testDirectory.GetDirectories().Length.Should().Be(1);
+            _testDirectory.GetDirectories().Length.ShouldBe(1);
             var createdDate = _testDirectory.GetDirectories().Single(x=>x.FullName == newDirectoryName).CreationTimeUtc;
 
             //Sleep long enough to allow system time to "tick" as well as run into any test parallelization issues. 
@@ -167,8 +167,8 @@ namespace Aero.Common
 
             //Assert
             var subDirs = _testDirectory.GetDirectories();
-            subDirs.Length.Should().Be(1);
-            subDirs.Single(di => di.FullName == newDirectoryName).CreationTimeUtc.Should().Be(createdDate);
+            subDirs.Length.ShouldBe(1);
+            subDirs.Single(di => di.FullName == newDirectoryName).CreationTimeUtc.ShouldBe(createdDate);
         }
     }
 }
