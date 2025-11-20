@@ -6,7 +6,7 @@ namespace Aero
     public interface ICrypto
     {
         string HashPassword(string password, int numberOfIterations = 300000, HashAlgorithmName hashAlgorithmName = default);
-        bool ValidatePassword(string password, string correctHash, HashAlgorithmName hashAlgorithmName = default);
+        bool ValidatePassword(string password, string correctHash);
     }
 
     public class Crypto : ICrypto
@@ -15,6 +15,7 @@ namespace Aero
         public const int IterationIndex = 0;
         public const int SaltIndex = 1;
         public const int Pbkdf2Index = 2;
+        public const int AlgorithmIndex = 3;
 
         public string HashPassword(string password, int numberOfIterations = 300000, HashAlgorithmName hashAlgorithmName = default)
         {
@@ -27,19 +28,29 @@ namespace Aero
             var hash = GetPbkdf2Bytes(password, salt, numberOfIterations, hashAlgorithmName);
             return numberOfIterations + ":" +
                    Convert.ToBase64String(salt) + ":" +
-                   Convert.ToBase64String(hash);
+                   Convert.ToBase64String(hash) + ":" +
+                   hashAlgorithmName.Name;
         }
 
-        public bool ValidatePassword(string password, string correctHash, HashAlgorithmName hashAlgorithmName = default)
+        public bool ValidatePassword(string password, string correctHash)
         {
-            if (hashAlgorithmName == default)
-                hashAlgorithmName = HashAlgorithmName.SHA512;
-
             char[] delimiter = { ':' };
             var split = correctHash.Split(delimiter);
             var iterations = Int32.Parse(split[IterationIndex]);
             var salt = Convert.FromBase64String(split[SaltIndex]);
             var hash = Convert.FromBase64String(split[Pbkdf2Index]);
+
+            // Handle legacy hashes (3 elements) - assume SHA1
+            HashAlgorithmName hashAlgorithmName;
+            if (split.Length == 3)
+            {
+                hashAlgorithmName = HashAlgorithmName.SHA1;
+            }
+            else
+            {
+                // New format with algorithm name
+                hashAlgorithmName = new HashAlgorithmName(split[AlgorithmIndex]);
+            }
 
             var testHash = GetPbkdf2Bytes(password, salt, iterations, hashAlgorithmName, hash.Length);
             return SlowEquals(hash, testHash);

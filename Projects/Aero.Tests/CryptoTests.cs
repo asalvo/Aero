@@ -70,7 +70,8 @@ namespace Aero.Common
 
             //Assert
             hash.ShouldStartWith($"{iterations}:");
-            _serviceUnderTest.ValidatePassword(password, hash, HashAlgorithmName.SHA256).ShouldBeTrue();
+            hash.ShouldEndWith(":SHA256");
+            _serviceUnderTest.ValidatePassword(password, hash).ShouldBeTrue();
         }
 
         [Fact]
@@ -92,24 +93,24 @@ namespace Aero.Common
         }
 
         [Fact]
-        public void ValidatePassword_1000_Sha1_10000()
+        public void ValidatePassword_1000_LegacyFormat_Sha1_10000()
         {
-            //Assert - This hash was created with SHA1 and 10000 iterations
-            _serviceUnderTest.ValidatePassword("Test", "10000:HqulkQiYvrVO9ID6q8cZ6enTK0DbSB0n:VLqrhB/imGJzd1g5Fx3p7i5Vkno=", HashAlgorithmName.SHA1).ShouldBeTrue();
+            //Assert - This is a legacy hash (3 elements) created with SHA1 and 10000 iterations
+            _serviceUnderTest.ValidatePassword("Test", "10000:HqulkQiYvrVO9ID6q8cZ6enTK0DbSB0n:VLqrhB/imGJzd1g5Fx3p7i5Vkno=").ShouldBeTrue();
         }
 
         [Fact]
         public void ValidatePassword_1001_Sha512_300000()
         {
             //Assert - This hash was created with SHA512 and 300000 iterations
-            _serviceUnderTest.ValidatePassword("Test", "300000:HqulkQiYvrVO9ID6q8cZ6enTK0DbSB0n:wkh8lHBHtXCEHBJGVWW2doJKS7I=", HashAlgorithmName.SHA512).ShouldBeTrue();
+            _serviceUnderTest.ValidatePassword("Test", "300000:HqulkQiYvrVO9ID6q8cZ6enTK0DbSB0n:wkh8lHBHtXCEHBJGVWW2doJKS7I=:SHA512").ShouldBeTrue();
         }
 
         [Fact]
         public void ValidatePassword_1002_Sha256_100000()
         {
             //Assert - This hash was created with SHA256 and 100000 iterations
-            _serviceUnderTest.ValidatePassword("Test", "100000:HqulkQiYvrVO9ID6q8cZ6enTK0DbSB0n:gnp9agndPT+A26Dz0WmCUf2O1Ag=", HashAlgorithmName.SHA256).ShouldBeTrue();
+            _serviceUnderTest.ValidatePassword("Test", "100000:HqulkQiYvrVO9ID6q8cZ6enTK0DbSB0n:gnp9agndPT+A26Dz0WmCUf2O1Ag=:SHA256").ShouldBeTrue();
         }
 
         [Fact]
@@ -119,9 +120,27 @@ namespace Aero.Common
             var password = "TestDefault";
             var hash = _serviceUnderTest.HashPassword(password);
 
-            //Assert - Should validate with explicit SHA512 and 300000
-            _serviceUnderTest.ValidatePassword(password, hash,HashAlgorithmName.SHA512).ShouldBeTrue();
+            //Assert - Should validate with SHA512 and 300000
+            _serviceUnderTest.ValidatePassword(password, hash).ShouldBeTrue();
             hash.ShouldStartWith("300000:");
+            hash.ShouldEndWith(":SHA512");
+        }
+
+        [Theory]
+        [InlineData(50000, "SHA1")]
+        [InlineData(200000, "SHA256")]
+        [InlineData(400000, "SHA512")]
+        public void ValidatePassword_1004_Test(int numberOfIterations, string hashAlgorithmNameAsString)
+        {
+            //Arrange
+            var password = "Test";
+            var hashAlgorithmName = new HashAlgorithmName(hashAlgorithmNameAsString);
+            var hash = _serviceUnderTest.HashPassword(password, numberOfIterations, hashAlgorithmName);
+
+            //Assert - Should validate with SHA512 and 300000
+            _serviceUnderTest.ValidatePassword(password, hash).ShouldBeTrue();
+            hash.ShouldStartWith($"{numberOfIterations}:");
+            hash.ShouldEndWith($":{hashAlgorithmNameAsString}");
         }
 
         [Fact]
